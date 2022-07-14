@@ -1,0 +1,35 @@
+version: '3.9'
+
+services:
+  mongo:
+    image: mongo
+    restart: always
+    networks:
+      - neoway-fullstack-network
+
+  api:
+    build:
+      context: ./api
+    container_name: neoway-fullstack-api
+    networks:
+      - neoway-fullstack-network
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongo
+
+  # client:
+  #   build:
+  #     context: ./client
+  #   container_name: neoway-fullstack-client
+  #   networks:
+  #     - neoway-fullstack-network
+  #   ports:
+  #     - "8080:8080"
+  #   depends_on:
+  #     - api
+
+networks:
+  neoway-fullstack-network:
+    name: neoway-fullstack-network
+    driver: bridge

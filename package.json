@@ -1,0 +1,21 @@
+{
+  "name": "neoway-fullstack",
+  "version": "1.0.0",
+  "private": true,
+  "description": "",
+  "author": {
+    "name": "Leonardo Carey"
+  },
+  "bugs": {
+    "url": "https://github.com/leoncarey/neoway-fullstack/issues"
+  },
+  "homepage": "https://github.com/leoncarey/neoway-fullstack#readme",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leoncarey/neoway-fullstack.git"
+  },
+  "devDependencies": {
+    "@vue/cli": "^5.0.8"
+  }
+}
