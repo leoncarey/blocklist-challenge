@@ -1,0 +1,5 @@
+{
+  "extension": ["js"],
+  "timeout": "2000",
+  "_": ["./api/test/**/*.test.js"]
+}
