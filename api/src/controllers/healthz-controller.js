@@ -1,4 +1,4 @@
-const GatewayUnavailableError = require('../exceptions/gateway-unavaliable-error')
+const GatewayUnavailableError = require('../exceptions/gateway-unavailable-error')
 const logger = require('../helpers/logger')
 const { MongoRepository } = require('../repository')
 

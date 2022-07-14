@@ -1,5 +1,5 @@
 const Healthz = require('../../../src/controllers/healthz-controller')
-const GatewayUnavailableError = require('../../../src/exceptions/gateway-unavaliable-error')
+const GatewayUnavailableError = require('../../../src/exceptions/gateway-unavailable-error')
 const logger = require('../../../src/helpers/logger')
 const { MongoRepository } = require('../../../src/repository')
 
