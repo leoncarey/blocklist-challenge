@@ -1,8 +1,7 @@
 
 run:
 	docker-compose build --pull
-	docker-compose up api
-#client
+	docker-compose up client
 
 clean:
 	docker-compose down

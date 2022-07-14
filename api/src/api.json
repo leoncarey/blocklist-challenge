@@ -1,3 +1,8 @@
 {
-  
+  "openapi": "3.0.3",
+  "info": {
+    "version": "1.0.0",
+    "title": "Neoway Fullstack Test API",
+    "description": "O teste onde Leo irá provar o seu valor como um guerreiro valente a desbravar terras longínquas"
+  }
 }

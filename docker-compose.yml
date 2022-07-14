@@ -4,8 +4,14 @@ services:
   mongo:
     image: mongo
     restart: always
+    container_name: neoway-fullstack-mongo
+    ports:
+      - "27017:27017"
     networks:
       - neoway-fullstack-network
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
 
   api:
     build:
@@ -18,16 +24,16 @@ services:
     depends_on:
       - mongo
 
-  # client:
-  #   build:
-  #     context: ./client
-  #   container_name: neoway-fullstack-client
-  #   networks:
-  #     - neoway-fullstack-network
-  #   ports:
-  #     - "8080:8080"
-  #   depends_on:
-  #     - api
+  client:
+    build:
+      context: ./client
+    container_name: neoway-fullstack-client
+    networks:
+      - neoway-fullstack-network
+    ports:
+      - "8080:8080"
+    depends_on:
+      - api
 
 networks:
   neoway-fullstack-network:
