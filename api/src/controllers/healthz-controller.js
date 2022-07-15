@@ -8,7 +8,7 @@ class Healthz {
       await MongoRepository.ping()
       return res.end()
     } catch (error) {
-      logger.error(`Error message: ${error.message}`)
+      logger.error(`Error message: ${error}`)
       throw new GatewayUnavailableError(error)
     }
   }

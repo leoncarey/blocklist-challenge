@@ -5,24 +5,26 @@ services:
     image: mongo
     restart: always
     container_name: neoway-fullstack-mongo
-    ports:
-      - "27017:27017"
     networks:
       - neoway-fullstack-network
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME}
-      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+    ports:
+      - 27017:27017
+    volumes:
+      - ./api/data/docker-entrypoint-initdb.d/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
 
   api:
     build:
       context: ./api
+      target: service
     container_name: neoway-fullstack-api
-    networks:
-      - neoway-fullstack-network
     ports:
-      - "3000:3000"
+      - 3000:3000
     depends_on:
       - mongo
+    env_file:
+      - docker-compose.env
+    networks:
+      - neoway-fullstack-network
 
   client:
     build:
@@ -31,9 +33,23 @@ services:
     networks:
       - neoway-fullstack-network
     ports:
-      - "8080:8080"
+      - 8080:8080
     depends_on:
       - api
+    env_file:
+      - docker-compose.env
+
+  test-api:
+    build:
+      context: ./api
+      target: test
+    container_name: neoway-fullstack-test
+    networks:
+      - neoway-fullstack-network
+    depends_on:
+      - api
+    env_file:
+      - docker-compose.env
 
 networks:
   neoway-fullstack-network:

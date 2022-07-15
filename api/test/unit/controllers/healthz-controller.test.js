@@ -1,6 +1,6 @@
-const Healthz = require('../../../src/controllers/healthz-controller')
+const { Healthz } = require('../../../src/controllers')
 const GatewayUnavailableError = require('../../../src/exceptions/gateway-unavailable-error')
-const logger = require('../../../src/helpers/logger')
+const { logger } = require('../../../src/helpers')
 const { MongoRepository } = require('../../../src/repository')
 
 const assert = require('assert').strict

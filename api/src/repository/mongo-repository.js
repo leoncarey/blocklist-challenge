@@ -1,20 +1,20 @@
 const { MongoClient } = require('mongodb')
 
 class MongoRepository {
-  static async getConnection () {
-    const urlString = 'mongo://127.0.0.1:27017'
-    this.dbConnection = await MongoClient.connect(urlString)
-  }
-
   static async getDatabase () {
-    await this.getConnection()
-    return this.dbConnection.db(process.env.MONGO_DB_NAME)
+    const dbConnection = await _getConnection()
+    return dbConnection.db(process.env.MONGO_DB_NAME)
   }
 
-  static ping () {
-    const database = this.getDatabase()
+  static async ping () {
+    const database = await MongoRepository.getDatabase()
     return database.command({ ping: 1 })
   }
+}
+
+const _getConnection = () => {
+  const urlString = process.env.MONGO_URL
+  return MongoClient.connect(urlString)
 }
 
 module.exports = MongoRepository
