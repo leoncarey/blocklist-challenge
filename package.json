@@ -17,5 +17,8 @@
   },
   "devDependencies": {
     "@vue/cli": "^5.0.8"
+  },
+  "dependencies": {
+    "cpf-cnpj-validator": "^1.0.3"
   }
 }

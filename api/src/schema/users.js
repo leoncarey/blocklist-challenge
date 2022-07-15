@@ -1,6 +1,7 @@
 const { Schema, default: mongoose } = require('mongoose')
 
 const usersSchema = new Schema({
+  age: Number,
   blocked: Boolean,
   document: String,
   documentType: String,
