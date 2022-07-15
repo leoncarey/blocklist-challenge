@@ -10,7 +10,7 @@ services:
     ports:
       - 27017:27017
     volumes:
-      - ./api/data/docker-entrypoint-initdb.d/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+      - ./api/data/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
 
   api:
     build:
