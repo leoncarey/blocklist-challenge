@@ -1,20 +1,15 @@
-const { MongoClient } = require('mongodb')
+const mongoose = require('mongoose')
 
 class MongoRepository {
-  static async getDatabase () {
-    const dbConnection = await _getConnection()
-    return dbConnection.db(process.env.MONGO_DB_NAME)
+  static createConnectionMiddleware (req, _res, next) {
+    const urlString = process.env.MONGO_URL
+    mongoose.connect(urlString)
+    next()
   }
 
-  static async ping () {
-    const database = await MongoRepository.getDatabase()
-    return database.command({ ping: 1 })
+  static ping () {
+    return mongoose.connection.readyState
   }
-}
-
-const _getConnection = () => {
-  const urlString = process.env.MONGO_URL
-  return MongoClient.connect(urlString)
 }
 
 module.exports = MongoRepository
