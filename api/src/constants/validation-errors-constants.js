@@ -8,6 +8,10 @@ module.exports = {
     invalid: 'ID_BLOCKED_INVALID',
     required: 'ID_BLOCKED_IS_REQUIRED'
   },
+  limit: {
+    invalid: 'LIMIT_INVALID',
+    required: 'LIMIT_IS_REQUIRED'
+  },
   offset: {
     invalid: 'OFFSET_INVALID',
     required: 'OFFSET_IS_REQUIRED'

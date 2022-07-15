@@ -8,6 +8,7 @@ class GetBlocklistParameters {
     this.orderFilter = req.params.orderFilter
     this.order = req.params.order
     this.offset = req.params?.offset && Parser.parseInt(req.params.offset)
+    this.limit = req.params?.limit && Parser.parseInt(req.params.limit)
     this.isBlocked = req.params?.isBlocked && Parser.parseBoolean(req.params.isBlocked)
     this.document = req.params.document
 
@@ -38,6 +39,14 @@ const _validate = (parameters) => {
     (parameters.offset && typeof parameters.offset !== 'number')
   ) {
     parameters.errors.push(validationErrors.offset.invalid)
+  }
+
+  // Limit validate format and keys
+  if (
+    (parameters.limit !== undefined && isNaN(parameters.limit)) ||
+    (parameters.limit && typeof parameters.limit !== 'number')
+  ) {
+    parameters.errors.push(validationErrors.limit.invalid)
   }
 
   // IsBlocked validate format

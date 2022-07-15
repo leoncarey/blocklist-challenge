@@ -1,14 +1,16 @@
 const { GetBlocklistParameters } = require('../parameters')
 const { ValidationError } = require('../exceptions')
+const MongoRepository = require('../repository/mongo-repository')
 
 class BlocklistController {
-  static get (req, res) {
+  static async get (req, res) {
     const parameters = GetBlocklistParameters.processParameters(req)
     if (parameters.errors.length !== 0) {
       throw new ValidationError(parameters.errors)
     }
 
-    res.json()
+    const users = await MongoRepository.findMany(parameters)
+    res.status(200).send(users)
   }
 }
 

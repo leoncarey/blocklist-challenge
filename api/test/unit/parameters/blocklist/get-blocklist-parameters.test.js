@@ -97,6 +97,31 @@ describe('Tests for GetBlocklistParameters', function () {
     })
   })
 
+  describe('Tests for limit', function () {
+    before(function () {
+      req.params = {
+        limit: 50
+      }
+    })
+
+    it('should not return errors', function () {
+      const parameters = GetBlocklistParameters.processParameters(req)
+      assert(parameters.errors.length === 0)
+    })
+
+    it('should return invalid error with limit is string', function () {
+      req.params.limit = 'foo'
+      const parameters = GetBlocklistParameters.processParameters(req)
+      assert.deepEqual(parameters.errors, [validationErrors.limit.invalid])
+    })
+
+    it('should return invalid error with limit is boolean', function () {
+      req.params.limit = 'foo'
+      const parameters = GetBlocklistParameters.processParameters(req)
+      assert.deepEqual(parameters.errors, [validationErrors.limit.invalid])
+    })
+  })
+
   describe('Tests for isBlocked', function () {
     before(function () {
       req.params = {

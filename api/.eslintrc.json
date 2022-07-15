@@ -30,6 +30,7 @@
     "no-magic-numbers": "off",
     "no-plusplus": "off",
     "no-ternary": "off",
+    "complexity": "off",
     "quote-props": [
       "error",
       "as-needed"
