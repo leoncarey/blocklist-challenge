@@ -1,5 +1,5 @@
 const { Healthz } = require('../../../src/controllers')
-const GatewayUnavailableError = require('../../../src/exceptions/gateway-unavailable-error')
+const { ServiceUnavailableError } = require('../../../src/exceptions')
 const { logger } = require('../../../src/helpers')
 const { MongoRepository } = require('../../../src/repository')
 
@@ -32,9 +32,9 @@ describe('Test integration for Healthz', function () {
 
   it('should return error if Mongo is unavailable', async function () {
     MongoRepository.ping.restore()
-    sandbox.stub(MongoRepository, 'ping').throws(new GatewayUnavailableError('Error'))
+    sandbox.stub(MongoRepository, 'ping').throws(new ServiceUnavailableError())
 
-    await assert.rejects(Healthz.get(req, res), GatewayUnavailableError)
+    await assert.rejects(Healthz.get(req, res), ServiceUnavailableError)
     assert.ok(MongoRepository.ping.calledOnce)
     assert.ok(res.end.notCalled)
     assert.ok(logger.error.calledOnce)

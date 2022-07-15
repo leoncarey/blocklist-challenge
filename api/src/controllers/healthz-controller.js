@@ -1,4 +1,4 @@
-const GatewayUnavailableError = require('../exceptions/gateway-unavailable-error')
+const { ServiceUnavailableError } = require('../exceptions')
 const logger = require('../helpers/logger')
 const { MongoRepository } = require('../repository')
 
@@ -9,7 +9,7 @@ class Healthz {
       return res.end()
     } catch (error) {
       logger.error(`Error message: ${error}`)
-      throw new GatewayUnavailableError(error)
+      throw new ServiceUnavailableError(error)
     }
   }
 }
