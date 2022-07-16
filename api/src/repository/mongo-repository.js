@@ -1,35 +1,68 @@
-const mongoose = require('mongoose')
-const Users = require('../models/users')
-
 class MongoRepository {
-  static createConnectionMiddleware (req, _res, next) {
-    const urlString = process.env.MONGO_URL
-    mongoose.connect(urlString)
-    next()
+  static setRepository (database) {
+    this.database = database
+    return this
   }
 
   static ping () {
-    return mongoose.connection.readyState
+    return this.database.command({ ping: 1 })
   }
 
-  static findMany (parameters) {
+  static async findWithPagination (parameters, collection) {
     const filter = {}
-
     if (parameters.isBlocked !== undefined) filter.blocked = parameters.isBlocked
-
     if (parameters.document !== undefined) filter.document = parameters.document
 
-    const sortKey = parameters.orderFilter || 'order'
+    const aggregateQuery = [
+      {
+        $facet: {
+          data: [
+            {
+              $match: filter
+            }
+          ],
+          totalCount: [
+            {
+              $match: filter
+            },
+            {
+              $group: {
+                _id: null,
+                count: { $sum: 1 }
+              }
+            }
+          ]
+        }
+      }
+    ]
+
+    const sortKey = parameters?.orderFilter || 'order'
 
     const options = {
       limit: parameters.limit || 10,
-      skip: parameters.offset || 0,
+      offset: parameters.offset || 0,
       sort: {
-        [sortKey]: parameters.order || 'ASC'
+        [sortKey]: parameters.order || -1
       }
     }
 
-    return Users.find(filter, null, options)
+    if (options.sort) {
+      aggregateQuery[0].$facet.data.push({ $sort: options.sort })
+    }
+
+    const skip = options.offset * options.limit
+    aggregateQuery[0].$facet.data.push({ $skip: skip })
+
+    aggregateQuery[0].$facet.data.push({ $limit: options.limit })
+
+    const resultDatabase = await this.database.collection(collection)
+      .aggregate(aggregateQuery)
+      .toArray()
+
+    return {
+      items: resultDatabase[0].data,
+      total: resultDatabase[0].totalCount[0]?.count || 0
+    }
   }
 }
 

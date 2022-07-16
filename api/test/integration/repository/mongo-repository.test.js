@@ -1,30 +1,33 @@
 const assert = require('assert').strict
 
-const { MongoRepository } = require('../../../src/repository')
+const { MongoRepository, MongoConnection } = require('../../../src/repository')
+
+const collection = 'testCollection'
 
 describe('Mongo Repository integration tests', function () {
-  const req = {}
-  const res = {}
+  let connection = {}
+  let repository = {}
 
   before(async function () {
-    await MongoRepository.createConnectionMiddleware(req, res, () => true)
+    connection = await MongoConnection.getConnection()
+    repository = MongoRepository.setRepository(connection)
   })
 
   it('should not return error on ping', async function () {
-    const ping = await MongoRepository.ping()
-    assert(ping)
+    const ping = await repository.ping()
+    assert(ping.ok)
   })
 
-  it('should not return error on findMany', async function () {
+  it('should not return error on findWithPagination', async function () {
     const parameters = {
       document: '67470813071',
       isBlocked: false,
       limit: 2
     }
 
-    const response = await MongoRepository.findMany(parameters)
+    const response = await repository.findWithPagination(parameters, collection)
 
-    assert.notEqual(response, [])
-    assert(response.length !== 0)
+    assert.notEqual(response, null)
+    assert(response.total !== 0)
   })
 })

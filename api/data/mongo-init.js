@@ -8,8 +8,9 @@ db.createUser({
 })
 
 db.createCollection('users')
+db.createCollection('testCollection')
 
-db.users.insertMany([
+const collectionData = [
   {
     name: 'Senhor Stark',
     document: '67470813071',
@@ -46,6 +47,9 @@ db.users.insertMany([
     createAt: new Date().toISOString(),
     updateAt: new Date().toISOString()
   }
-])
+]
+
+db.users.insertMany(collectionData)
+db.testCollection.insertMany(collectionData)
 
 print('END #################################################################')

@@ -1,7 +1,7 @@
 const app = require('./app')
 const { logger } = require('./helpers')
 
-const PORT = process.env.SERVER_PORT || 3000
+const PORT = process.env.SERVER_PORT || 11000
 
 const server = app.listen(PORT, () => {
   logger.info('Http server on deline')

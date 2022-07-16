@@ -12,7 +12,7 @@ describe('Tests for GetBlocklistParameters', function () {
       document: cpf.generate(),
       isBlocked: true,
       offset: 0,
-      order: 'ASC',
+      order: -1,
       orderFilter: 'order'
     }
   })
@@ -50,7 +50,7 @@ describe('Tests for GetBlocklistParameters', function () {
   describe('Tests for order', function () {
     before(function () {
       req.params = {
-        order: 'ASC'
+        order: -1
       }
     })
 
@@ -59,13 +59,7 @@ describe('Tests for GetBlocklistParameters', function () {
       assert(parameters.errors.length === 0)
     })
 
-    it('should return invalid error if order is not string', function () {
-      req.params.order = 123458
-      const parameters = GetBlocklistParameters.processParameters(req)
-      assert.deepEqual(parameters.errors, [validationErrors.order.invalid])
-    })
-
-    it('should return invalid error with order is not equal ASC or DESC', function () {
+    it('should return invalid error if order is not number', function () {
       req.params.order = 'foo'
       const parameters = GetBlocklistParameters.processParameters(req)
       assert.deepEqual(parameters.errors, [validationErrors.order.invalid])

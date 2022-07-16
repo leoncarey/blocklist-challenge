@@ -1,11 +1,10 @@
 const { ServiceUnavailableError } = require('../exceptions')
 const logger = require('../helpers/logger')
-const { MongoRepository } = require('../repository')
 
-class Healthz {
+class HealthzController {
   static async get (req, res) {
     try {
-      await MongoRepository.ping()
+      await req.mongo.ping()
       return res.end()
     } catch (error) {
       logger.error(`Error message: ${error}`)
@@ -14,4 +13,4 @@ class Healthz {
   }
 }
 
-module.exports = Healthz
+module.exports = HealthzController

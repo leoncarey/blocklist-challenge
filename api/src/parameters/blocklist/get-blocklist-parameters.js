@@ -6,7 +6,7 @@ class GetBlocklistParameters {
     this.errors = []
 
     this.orderFilter = req.params.orderFilter
-    this.order = req.params.order
+    this.order = req.params?.order && Parser.parseInt(req.params.order)
     this.offset = req.params?.offset && Parser.parseInt(req.params.offset)
     this.limit = req.params?.limit && Parser.parseInt(req.params.limit)
     this.isBlocked = req.params?.isBlocked && Parser.parseBoolean(req.params.isBlocked)
@@ -20,9 +20,10 @@ class GetBlocklistParameters {
 
 const _validate = (parameters) => {
   // Order validate format
-  if (parameters.order !== undefined && typeof parameters.order !== 'string') {
-    parameters.errors.push(validationErrors.order.invalid)
-  } else if (parameters.order !== undefined && parameters.order !== 'ASC' && parameters.order !== 'DESC') {
+  if (
+    (parameters.order !== undefined && isNaN(parameters.order)) ||
+    (parameters.order && typeof parameters.order !== 'number')
+  ) {
     parameters.errors.push(validationErrors.order.invalid)
   }
 

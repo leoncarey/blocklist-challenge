@@ -1,7 +1,6 @@
-const { Healthz } = require('../../../src/controllers')
+const { HealthzController } = require('../../../src/controllers')
 const { ServiceUnavailableError } = require('../../../src/exceptions')
 const { logger } = require('../../../src/helpers')
-const { MongoRepository } = require('../../../src/repository')
 
 const assert = require('assert').strict
 const sandbox = require('sinon').createSandbox()
@@ -15,7 +14,7 @@ describe('Test integration for Healthz', function () {
   })
 
   beforeEach(function () {
-    sandbox.stub(MongoRepository, 'ping').returns(true)
+    sandbox.spy(req.mongo)
     sandbox.spy(res)
     sandbox.spy(logger)
   })
@@ -25,24 +24,28 @@ describe('Test integration for Healthz', function () {
   })
 
   it('should not return error', async function () {
-    await assert.doesNotReject(Healthz.get(req, res))
-    assert.ok(MongoRepository.ping.calledOnce)
-    assert.ok(res.end.calledOnce)
+    await assert.doesNotReject(HealthzController.get(req, res))
+    assert(req.mongo.ping.calledOnce)
+    assert(res.end.calledOnce)
   })
 
   it('should return error if Mongo is unavailable', async function () {
-    MongoRepository.ping.restore()
-    sandbox.stub(MongoRepository, 'ping').throws(new ServiceUnavailableError())
+    req.mongo.ping.restore()
+    sandbox.stub(req.mongo, 'ping').throws(new ServiceUnavailableError())
 
-    await assert.rejects(Healthz.get(req, res), ServiceUnavailableError)
-    assert.ok(MongoRepository.ping.calledOnce)
-    assert.ok(res.end.notCalled)
-    assert.ok(logger.error.calledOnce)
+    await assert.rejects(HealthzController.get(req, res), ServiceUnavailableError)
+    assert(req.mongo.ping.calledOnce)
+    assert(res.end.notCalled)
+    assert(logger.error.calledOnce)
   })
 })
 
 const getFakeResAndReq = () => {
-  const req = {}
+  const req = {
+    mongo: {
+      ping: () => true
+    }
+  }
   const res = {
     end: () => true
   }

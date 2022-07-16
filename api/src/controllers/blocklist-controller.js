@@ -9,7 +9,7 @@ class BlocklistController {
       throw new ValidationError(parameters.errors)
     }
 
-    const users = await MongoRepository.findMany(parameters)
+    const users = await MongoRepository.findWithPagination(parameters, 'users')
     res.status(200).send(users)
   }
 }

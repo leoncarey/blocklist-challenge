@@ -33,7 +33,7 @@ describe('Unit tests for BlocklistController', function () {
     ]
 
     sandbox.stub(GetBlocklistParameters, 'processParameters').returns(fakeParameters)
-    sandbox.stub(MongoRepository, 'findMany').returns(fakeUsersReturn)
+    sandbox.stub(MongoRepository, 'findWithPagination').returns(fakeUsersReturn)
 
     sandbox.spy(res)
   })
@@ -47,7 +47,7 @@ describe('Unit tests for BlocklistController', function () {
       await assert.doesNotReject(BlocklistController.get(req, res))
 
       assert(GetBlocklistParameters.processParameters.calledOnce)
-      assert(MongoRepository.findMany.calledOnce)
+      assert(MongoRepository.findWithPagination.calledOnce)
       assert(res.status.calledOnce)
     })
 
@@ -60,17 +60,17 @@ describe('Unit tests for BlocklistController', function () {
       await assert.rejects(BlocklistController.get(req, res), ValidationError)
 
       assert(GetBlocklistParameters.processParameters.calledOnce)
-      assert(MongoRepository.findMany.notCalled)
+      assert(MongoRepository.findWithPagination.notCalled)
     })
 
     it('should return error if MongoRepository has error', async function () {
-      MongoRepository.findMany.restore()
-      sandbox.stub(MongoRepository, 'findMany').throws(new ServiceUnavailableError())
+      MongoRepository.findWithPagination.restore()
+      sandbox.stub(MongoRepository, 'findWithPagination').throws(new ServiceUnavailableError())
 
       await assert.rejects(BlocklistController.get(req, res), ServiceUnavailableError)
 
       assert(GetBlocklistParameters.processParameters.calledOnce)
-      assert(MongoRepository.findMany.calledOnce)
+      assert(MongoRepository.findWithPagination.calledOnce)
       assert(res.status.notCalled)
     })
   })

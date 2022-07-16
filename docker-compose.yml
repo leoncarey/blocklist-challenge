@@ -18,7 +18,7 @@ services:
       target: service
     container_name: neoway-fullstack-api
     ports:
-      - 3000:3000
+      - 11000:3000
     depends_on:
       - mongo
     env_file:
