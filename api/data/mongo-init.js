@@ -1,14 +1,10 @@
 print('Start #################################################################')
 
-db = db.getSiblingDB('neoway-fullstack-db')
-db.createUser({
+const userDb = {
   user: 'root',
   pwd: 'essavagaehminha',
   roles: [{ role: 'readWrite', db: 'neoway-fullstack-db' }]
-})
-
-db.createCollection('users')
-db.createCollection('testCollection')
+}
 
 const collectionData = [
   {
@@ -49,7 +45,10 @@ const collectionData = [
   }
 ]
 
-db.users.insertMany(collectionData)
-db.testCollection.insertMany(collectionData)
+database = db.getSiblingDB('neoway-fullstack-db')
+database.createUser(userDb)
+database.createCollection('users')
+database.users.insertMany(collectionData)
+
 
 print('END #################################################################')

@@ -1,7 +1,7 @@
 const HealthzController = require('./healthz-controller')
-const BlocklistController = require('./blocklist-controller')
+const UserController = require('./user-controller')
 
 module.exports = {
-  BlocklistController,
-  HealthzController
+  HealthzController,
+  UserController
 }

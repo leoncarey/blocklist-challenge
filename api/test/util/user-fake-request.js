@@ -2,6 +2,7 @@ const getFakeResAndReq = () => {
   const req = {
     mongo: {
       findWithPagination: () => true,
+      getLastNextOrderSequence: () => true,
       insertOne: () => true
     }
   }

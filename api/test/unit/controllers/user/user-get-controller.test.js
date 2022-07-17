@@ -3,12 +3,12 @@ const sandbox = require('sinon').createSandbox()
 
 const { cpf } = require('cpf-cnpj-validator')
 const validationErrorsConstants = require('../../../../src/constants/validation-errors-constants')
-const BlocklistController = require('../../../../src/controllers/blocklist-controller')
+const { UserController } = require('../../../../src/controllers')
 const { ValidationError, ServiceUnavailableError } = require('../../../../src/exceptions')
-const { GetBlocklistParameters } = require('../../../../src/parameters')
-const getFakeResAndReq = require('../../../util/blocklist-fake-request')
+const { GetUserParameters } = require('../../../../src/parameters')
+const getFakeResAndReq = require('../../../util/user-fake-request')
 
-describe('Unit tests for BlocklistController.get', function () {
+describe('Unit tests for UserController.get', function () {
   let req = {}
   let res = {}
   let fakeParameters = {}
@@ -32,7 +32,7 @@ describe('Unit tests for BlocklistController.get', function () {
       }
     ]
 
-    sandbox.stub(GetBlocklistParameters, 'processParameters').returns(fakeParameters)
+    sandbox.stub(GetUserParameters, 'processParameters').returns(fakeParameters)
     sandbox.stub(req.mongo, 'findWithPagination').returns(fakeUsersReturn)
 
     sandbox.spy(res)
@@ -43,22 +43,22 @@ describe('Unit tests for BlocklistController.get', function () {
   })
 
   it('should not return error', async function () {
-    await assert.doesNotReject(BlocklistController.get(req, res))
+    await assert.doesNotReject(UserController.get(req, res))
 
-    assert(GetBlocklistParameters.processParameters.calledOnce)
+    assert(GetUserParameters.processParameters.calledOnce)
     assert(req.mongo.findWithPagination.calledOnce)
     assert(res.status.calledOnce)
   })
 
   it('should return error if has validation error', async function () {
-    GetBlocklistParameters.processParameters.restore()
-    sandbox.stub(GetBlocklistParameters, 'processParameters').returns({
+    GetUserParameters.processParameters.restore()
+    sandbox.stub(GetUserParameters, 'processParameters').returns({
       errors: [validationErrorsConstants.document.invalid]
     })
 
-    await assert.rejects(BlocklistController.get(req, res), ValidationError)
+    await assert.rejects(UserController.get(req, res), ValidationError)
 
-    assert(GetBlocklistParameters.processParameters.calledOnce)
+    assert(GetUserParameters.processParameters.calledOnce)
     assert(req.mongo.findWithPagination.notCalled)
   })
 
@@ -66,9 +66,9 @@ describe('Unit tests for BlocklistController.get', function () {
     req.mongo.findWithPagination.restore()
     sandbox.stub(req.mongo, 'findWithPagination').throws(new ServiceUnavailableError())
 
-    await assert.rejects(BlocklistController.get(req, res), ServiceUnavailableError)
+    await assert.rejects(UserController.get(req, res), ServiceUnavailableError)
 
-    assert(GetBlocklistParameters.processParameters.calledOnce)
+    assert(GetUserParameters.processParameters.calledOnce)
     assert(req.mongo.findWithPagination.calledOnce)
     assert(res.status.notCalled)
   })

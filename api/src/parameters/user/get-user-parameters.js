@@ -1,16 +1,16 @@
 const { Parser, DocumentValidator, ParameterValidator } = require('../../helpers')
 const { validationErrors, acceptedFilters } = require('../../constants')
 
-class GetBlocklistParameters {
+class GetUserParameters {
   static processParameters (req) {
     this.errors = []
 
-    this.orderFilter = req.params.orderFilter
-    this.order = req.params?.order && Parser.parseInt(req.params.order)
-    this.offset = req.params?.offset && Parser.parseInt(req.params.offset)
-    this.limit = req.params?.limit && Parser.parseInt(req.params.limit)
-    this.isBlocked = req.params?.isBlocked && Parser.parseBoolean(req.params.isBlocked)
-    this.document = req.params.document
+    this.orderFilter = req.query.orderFilter
+    this.order = req.query?.order && Parser.parseInt(req.query.order)
+    this.offset = req.query?.offset && Parser.parseInt(req.query.offset)
+    this.limit = req.query?.limit && Parser.parseInt(req.query.limit)
+    this.isBlocked = req.query?.isBlocked && Parser.parseBoolean(req.query.isBlocked)
+    this.document = req.query.document
 
     _validate(this)
 
@@ -66,4 +66,4 @@ const _validate = (parameters) => {
     })
 }
 
-module.exports = GetBlocklistParameters
+module.exports = GetUserParameters

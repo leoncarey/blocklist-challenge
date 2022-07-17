@@ -1,7 +1,7 @@
 const { Parser, DocumentValidator, ParameterValidator } = require('../../helpers')
 const { validationErrors } = require('../../constants')
 
-class PostBlocklistParameters {
+class PostUserParameters {
   static processParameters (req) {
     this.errors = []
 
@@ -37,4 +37,4 @@ const _validate = (parameters) => {
     .isBoolean()
 }
 
-module.exports = PostBlocklistParameters
+module.exports = PostUserParameters

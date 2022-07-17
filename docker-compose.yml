@@ -17,19 +17,21 @@ services:
       context: ./api
       target: service
     container_name: neoway-fullstack-api
+    restart: always
     ports:
       - 11000:3000
     depends_on:
       - mongo
-    env_file:
-      - docker-compose.env
     networks:
       - neoway-fullstack-network
+    env_file:
+      - docker-compose.env
 
   client:
     build:
       context: ./client
     container_name: neoway-fullstack-client
+    restart: always
     networks:
       - neoway-fullstack-network
     ports:

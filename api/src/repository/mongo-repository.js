@@ -1,3 +1,5 @@
+const { ObjectID } = require('mongodb')
+
 class MongoRepository {
   static setRepository (database) {
     this.database = database
@@ -77,6 +79,19 @@ class MongoRepository {
     const databaseResult = await this.database.collection(collection).insertOne(datedValue, options)
 
     return databaseResult?.insertedId || null
+  }
+
+  static async getLastNextOrderSequence (collection) {
+    const sequenceOrder = await this.database.collection(collection)
+      .find({}, { sort: { order: -1 } })
+      .toArray()
+
+    return sequenceOrder[0]?.order + 1 || null
+  }
+
+  static async deleteById (id, collection) {
+    const databaseResult = await this.database.collection(collection).deleteOne({ _id: ObjectID(id) })
+    return databaseResult.deletedCount > 0
   }
 }
 

@@ -4,13 +4,17 @@ const swaggerDocument = require('./api.json')
 
 const {
   HealthzController,
-  BlocklistController
+  UserController
 } = require('./controllers')
 
 router.use('/docs', swaggerUi.serve)
 router.get('/docs', swaggerUi.setup(swaggerDocument))
 
+// Healthz
 router.route('/healthz').get(HealthzController.get)
-router.route('/get-blocklist').get(BlocklistController.get)
+
+// UserController
+router.route('/users').get(UserController.get)
+router.route('/users').post(UserController.post)
 
 module.exports = router
