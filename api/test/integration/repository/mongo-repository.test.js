@@ -36,7 +36,7 @@ describe('Mongo Repository integration tests', function () {
     const newUser = {
       blocked: false,
       document: cpf.generate(),
-      userName: 'Morgan Stark'
+      name: 'Morgan Stark'
     }
 
     const insertedId = await repository.insertOne(newUser, collection)

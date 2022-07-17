@@ -1,6 +1,5 @@
-const { GetBlocklistParameters } = require('../parameters')
+const { GetBlocklistParameters, PostBlocklistParameters } = require('../parameters')
 const { ValidationError } = require('../exceptions')
-const MongoRepository = require('../repository/mongo-repository')
 
 class BlocklistController {
   static async get (req, res) {
@@ -9,8 +8,24 @@ class BlocklistController {
       throw new ValidationError(parameters.errors)
     }
 
-    const users = await MongoRepository.findWithPagination(parameters, 'users')
+    const users = await req.mongo.findWithPagination(parameters, 'users')
     res.status(200).send(users)
+  }
+
+  static async post (req, res) {
+    const parameters = PostBlocklistParameters.processParameters(req)
+    if (parameters.errors.length !== 0) {
+      throw new ValidationError(parameters.errors)
+    }
+
+    const newUser = {
+      blocked: parameters.blocked,
+      document: parameters.document,
+      name: parameters.userName
+    }
+
+    const insertedUser = await req.mongo.insertOne(newUser, 'users')
+    res.status(200).send({ id: insertedUser.toString() })
   }
 }
 
