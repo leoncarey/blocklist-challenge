@@ -7,7 +7,7 @@ const { validationErrors } = require('../../../../src/constants')
 describe('Tests for GetBlocklistParameters', function () {
   const req = {}
 
-  before(function () {
+  beforeEach(function () {
     req.params = {
       document: cpf.generate(),
       isBlocked: true,
@@ -23,17 +23,6 @@ describe('Tests for GetBlocklistParameters', function () {
   })
 
   describe('Tests for orderFilter', function () {
-    before(function () {
-      req.params = {
-        orderFilter: 'name'
-      }
-    })
-
-    it('should not return errors', function () {
-      const parameters = GetBlocklistParameters.processParameters(req)
-      assert(parameters.errors.length === 0)
-    })
-
     it('should return invalid error with orderFilter invalid', function () {
       req.params.orderFilter = 123458
       const parameters = GetBlocklistParameters.processParameters(req)
@@ -48,17 +37,6 @@ describe('Tests for GetBlocklistParameters', function () {
   })
 
   describe('Tests for order', function () {
-    before(function () {
-      req.params = {
-        order: -1
-      }
-    })
-
-    it('should not return errors', function () {
-      const parameters = GetBlocklistParameters.processParameters(req)
-      assert(parameters.errors.length === 0)
-    })
-
     it('should return invalid error if order is not number', function () {
       req.params.order = 'foo'
       const parameters = GetBlocklistParameters.processParameters(req)
@@ -67,17 +45,6 @@ describe('Tests for GetBlocklistParameters', function () {
   })
 
   describe('Tests for offset', function () {
-    before(function () {
-      req.params = {
-        offset: 10
-      }
-    })
-
-    it('should not return errors', function () {
-      const parameters = GetBlocklistParameters.processParameters(req)
-      assert(parameters.errors.length === 0)
-    })
-
     it('should return invalid error with offset is string', function () {
       req.params.offset = 'foo'
       const parameters = GetBlocklistParameters.processParameters(req)
@@ -92,17 +59,6 @@ describe('Tests for GetBlocklistParameters', function () {
   })
 
   describe('Tests for limit', function () {
-    before(function () {
-      req.params = {
-        limit: 50
-      }
-    })
-
-    it('should not return errors', function () {
-      const parameters = GetBlocklistParameters.processParameters(req)
-      assert(parameters.errors.length === 0)
-    })
-
     it('should return invalid error with limit is string', function () {
       req.params.limit = 'foo'
       const parameters = GetBlocklistParameters.processParameters(req)
@@ -117,17 +73,6 @@ describe('Tests for GetBlocklistParameters', function () {
   })
 
   describe('Tests for isBlocked', function () {
-    before(function () {
-      req.params = {
-        isBlocked: false
-      }
-    })
-
-    it('should not return errors', function () {
-      const parameters = GetBlocklistParameters.processParameters(req)
-      assert(parameters.errors.length === 0)
-    })
-
     it('should return invalid error with isBlocked invalid', function () {
       req.params.isBlocked = 123458
       const parameters = GetBlocklistParameters.processParameters(req)
@@ -136,17 +81,6 @@ describe('Tests for GetBlocklistParameters', function () {
   })
 
   describe('Tests for document', function () {
-    before(function () {
-      req.params = {
-        document: cpf.generate()
-      }
-    })
-
-    it('should not return errors', function () {
-      const parameters = GetBlocklistParameters.processParameters(req)
-      assert(parameters.errors.length === 0)
-    })
-
     it('should return invalid error with document invalid', function () {
       req.params.document = 854113
       const parameters = GetBlocklistParameters.processParameters(req)
