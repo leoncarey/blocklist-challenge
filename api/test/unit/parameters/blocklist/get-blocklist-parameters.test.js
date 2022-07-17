@@ -86,5 +86,11 @@ describe('Tests for GetBlocklistParameters', function () {
       const parameters = GetBlocklistParameters.processParameters(req)
       assert.deepEqual(parameters.errors, [validationErrors.document.invalid])
     })
+
+    it('should return invalid error with document so big', function () {
+      req.params.document = '854113564545465456465'
+      const parameters = GetBlocklistParameters.processParameters(req)
+      assert.deepEqual(parameters.errors, [validationErrors.document.invalid])
+    })
   })
 })

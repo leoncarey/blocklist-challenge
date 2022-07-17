@@ -64,6 +64,33 @@ class MongoRepository {
       total: resultDatabase[0].totalCount[0]?.count || 0
     }
   }
+
+  static findOne (filter, collection) {
+    return this.database.collection(collection).findOne(filter)
+  }
+
+  static async insertOne (value, collection) {
+    let datedValue = _insertCreatedAt(value)
+    datedValue = _insertLastUpdate(value)
+
+    const options = { returnDocument: 'after', upsert: true }
+    const databaseResult = await this.database.collection(collection).insertOne(datedValue, options)
+
+    return databaseResult?.insertedId || null
+  }
+}
+
+const _insertCreatedAt = (value) => {
+  if (value.createdAt === undefined) {
+    value.createdAt = new Date().toISOString()
+  }
+
+  return value
+}
+
+const _insertLastUpdate = (value) => {
+  value._lastUpdate = new Date().toISOString()
+  return value
 }
 
 module.exports = MongoRepository
