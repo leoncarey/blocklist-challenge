@@ -1,25 +1,20 @@
 const assert = require('assert').strict
 const axios = require('axios')
 const { cpf } = require('cpf-cnpj-validator')
-const { mongoConfig } = require('../../../src/constants')
 
-const { MongoRepository, MongoConnection } = require('../../../src/repository')
+const { MongoConnection } = require('../../../src/repository')
+const { _findOne, _deleteOne } = require('../../util/mongo-actions')
 
 describe('Integration test for UserController', function () {
   let connection = {}
-  let repository = {}
 
   before(async function () {
     connection = await MongoConnection.getConnection()
-    repository = MongoRepository.setRepository(connection)
   })
 
   describe('get', function () {
     it('should return 200 when success', async function () {
       const options = {
-        headers: {
-          'Content-Type': 'application/json'
-        },
         method: 'get',
         params: {
           document: '67470813071',
@@ -34,7 +29,7 @@ describe('Integration test for UserController', function () {
         response = await axios(options)
       })
 
-      const userSelected = await repository.findOne({ document: options.params.document }, mongoConfig.COLLECTION)
+      const userSelected = await _findOne(connection, { document: options.params.document })
 
       assert.notEqual(response.data.items, null)
       assert.equal(response.data.items[0]._id.toString(), userSelected._id.toString())
@@ -49,9 +44,6 @@ describe('Integration test for UserController', function () {
           document: cpf.generate(),
           userName: 'Foo'
         },
-        headers: {
-          'Content-Type': 'application/json'
-        },
         method: 'post',
         url: `${process.env.SERVICE_API_URL}/users`
       }
@@ -61,12 +53,12 @@ describe('Integration test for UserController', function () {
         response = await axios(options)
       })
 
-      const insertedUser = await repository.findOne({ document: options.data.document }, mongoConfig.COLLECTION)
+      const insertedUser = await _findOne(connection, { document: options.data.document })
 
       assert.notEqual(response.data, null)
       assert.equal(response.data.id, insertedUser._id.toString())
 
-      await repository.deleteById(response.data.id, mongoConfig.COLLECTION)
+      await _deleteOne(connection, response.data.id)
     })
   })
 })

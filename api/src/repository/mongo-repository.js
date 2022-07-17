@@ -14,6 +14,7 @@ class MongoRepository {
     const filter = {}
     if (parameters.isBlocked !== undefined) filter.blocked = parameters.isBlocked
     if (parameters.document !== undefined) filter.document = parameters.document
+    if (parameters.userName !== undefined) filter.name = parameters.userName
 
     const aggregateQuery = [
       {
@@ -63,22 +64,28 @@ class MongoRepository {
 
     return {
       items: resultDatabase[0].data,
-      total: resultDatabase[0].totalCount[0]?.count || 0
+      totalCount: resultDatabase[0].totalCount[0]?.count || 0
     }
   }
 
-  static findOne (filter, collection) {
-    return this.database.collection(collection).findOne(filter)
-  }
-
   static async insertOne (value, collection) {
-    let datedValue = _insertCreatedAt(value)
-    datedValue = _insertLastUpdate(value)
+    let datedItem = _insertCreatedAt(value)
+    datedItem = _insertLastUpdate(value)
 
     const options = { returnDocument: 'after', upsert: true }
-    const databaseResult = await this.database.collection(collection).insertOne(datedValue, options)
+    const databaseResult = await this.database.collection(collection).insertOne(datedItem, options)
 
     return databaseResult?.insertedId || null
+  }
+
+  static async insertMany (itemList, collection) {
+    for (let value of itemList) {
+      value = _insertCreatedAt(value)
+      value = _insertLastUpdate(value)
+    }
+
+    const databaseResult = await this.database.collection(collection).insertMany(itemList)
+    return databaseResult
   }
 
   static async getLastNextOrderSequence (collection) {
@@ -93,19 +100,58 @@ class MongoRepository {
     const databaseResult = await this.database.collection(collection).deleteOne({ _id: ObjectID(id) })
     return databaseResult.deletedCount > 0
   }
-}
 
-const _insertCreatedAt = (value) => {
-  if (value.createdAt === undefined) {
-    value.createdAt = new Date().toISOString()
+  static async deleteMany (filter, collection) {
+    const databaseResult = await this.database.collection(collection).deleteMany(filter)
+    return databaseResult.deletedCount > 0
   }
 
-  return value
+  static async updateOne (filter, item, collection) {
+    const datedItem = _insertLastUpdate(item)
+
+    const element = {
+      $set: datedItem
+    }
+
+    const options = {
+      returnOriginal: false
+    }
+
+    const databaseResult = await this.database.collection(collection).findOneAndUpdate(filter, element, options)
+    return databaseResult?.value || null
+  }
+
+  static async updateMany (itemList, collection) {
+    const operator = []
+    for (const value of itemList) {
+      const datedItem = _insertLastUpdate(value)
+
+      const itemUpdatable = {
+        updateOne: {
+          filter: { _id: value._id },
+          update: { $set: datedItem }
+        }
+      }
+
+      operator.push(itemUpdatable)
+    }
+
+    const databaseResult = await this.database.collection(collection).bulkWrite(operator)
+    return databaseResult?.nModified || null
+  }
 }
 
-const _insertLastUpdate = (value) => {
-  value._lastUpdate = new Date().toISOString()
-  return value
+const _insertCreatedAt = (item) => {
+  if (item.createdAt === undefined) {
+    item.createdAt = new Date().toISOString()
+  }
+
+  return item
+}
+
+const _insertLastUpdate = (item) => {
+  item.updatedAt = new Date().toISOString()
+  return item
 }
 
 module.exports = MongoRepository

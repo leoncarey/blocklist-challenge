@@ -13,8 +13,8 @@ const collectionData = [
     documentType: 'CPF',
     blocked: false,
     order: 0,
-    createAt: new Date().toISOString(),
-    updateAt: new Date().toISOString()
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
   },
   {
     name: 'Petter Parker',
@@ -22,8 +22,8 @@ const collectionData = [
     documentType: 'CPF',
     blocked: true,
     order: 3,
-    createAt: new Date().toISOString(),
-    updateAt: new Date().toISOString()
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
   },
   {
     name: 'Industrias Stark',
@@ -31,8 +31,8 @@ const collectionData = [
     documentType: 'CNPJ',
     blocked: false,
     order: 2,
-    createAt: new Date().toISOString(),
-    updateAt: new Date().toISOString()
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
   },
   {
     name: 'Pepper Potts',
@@ -40,8 +40,8 @@ const collectionData = [
     documentType: 'CPF',
     blocked: false,
     order: 1,
-    createAt: new Date().toISOString(),
-    updateAt: new Date().toISOString()
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
   }
 ]
 
