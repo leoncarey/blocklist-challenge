@@ -1,6 +1,7 @@
 const getFakeResAndReq = () => {
   const req = {
     mongo: {
+      deleteById: () => true,
       findWithPagination: () => true,
       getLastNextOrderSequence: () => true,
       insertOne: () => true
