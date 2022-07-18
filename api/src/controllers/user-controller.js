@@ -31,6 +31,10 @@ class UserController {
     const insertedUser = await req.mongo.insertOne(newUser, mongoConfig.COLLECTION)
     return res.status(200).send({ id: insertedUser.toString() })
   }
+
+  static delete (req, res) {
+    res.status(200).send({})
+  }
 }
 
 const _getDocumentType = (document) => (document.length === 11 ? 'CPF' : 'CNPJ')

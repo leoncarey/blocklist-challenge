@@ -1,5 +1,6 @@
 const assert = require('assert').strict
 const sandbox = require('sinon').createSandbox()
+const { ObjectID } = require('mongodb')
 
 const { ParameterValidator } = require('../../../src/helpers')
 
@@ -464,6 +465,56 @@ describe('ParameterValidator tool test suite', function () {
     it(shouldReturnMissingErrorWhenGivenUndefined, function () {
       const input = undefined
       ParameterValidator.validate(input, ERROR_MSGS, errors).isObjectNotEmpty()
+      assert.equal(errors[0], MISSING_KEY)
+    })
+  })
+
+  describe('ObjectId', function () {
+    it('should not return errors when given an ObjectId', function () {
+      const input = new ObjectID()
+      ParameterValidator.validate(input, ERROR_MSGS, errors).isObjectId()
+      assert.equal(errors.length, 0)
+    })
+
+    it(shouldNotReturnErrorsWhenGiveNumber, function () {
+      const input = 1
+      ParameterValidator.validate(input, ERROR_MSGS, errors).isObjectId()
+      assert.equal(errors.length, 0)
+    })
+
+    it('should not return errors when given string with 24 chars', function () {
+      const input = '60661c2d8d01cf15042a47c8'
+      ParameterValidator.validate(input, ERROR_MSGS, errors).isObjectId()
+      assert.equal(errors.length, 0)
+    })
+
+    it(shouldReturnInvalidErrorWhenGivenObject, function () {
+      const input = {}
+      ParameterValidator.validate(input, ERROR_MSGS, errors).isObjectId()
+      assert.equal(errors[0], INVALID_KEY)
+    })
+
+    it(shouldReturnInvalidErrorWhenGivenString, function () {
+      const input = '1'
+      ParameterValidator.validate(input, ERROR_MSGS, errors).isObjectId()
+      assert.equal(errors[0], INVALID_KEY)
+    })
+
+    it(shouldReturnInvalidErrorWhenGivenEmptyString, function () {
+      const input = ''
+      ParameterValidator.validate(input, ERROR_MSGS, errors).isObjectId()
+      assert.equal(errors[0], INVALID_KEY)
+    })
+
+    it(shouldReturnMissingErrorWhenGivenNull, function () {
+      const input = null
+      ParameterValidator.validate(input, ERROR_MSGS, errors).isObjectId()
+      assert.equal(errors[0], MISSING_KEY)
+    })
+
+    it(shouldReturnMissingErrorWhenGivenUndefined, function () {
+      const input = undefined
+      ParameterValidator.validate(input, ERROR_MSGS, errors).isObjectId()
       assert.equal(errors[0], MISSING_KEY)
     })
   })

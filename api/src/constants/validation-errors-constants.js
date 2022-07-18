@@ -28,6 +28,10 @@ module.exports = {
     invalid: 'ORDER_FILTER_INVALID',
     required: 'ORDER_FILTER_IS_REQUIRED'
   },
+  userId: {
+    invalid: 'USER_ID_INVALID',
+    required: 'USER_ID_IS_REQUIRED'
+  },
   userName: {
     invalid: 'USER_NAME_INVALID',
     required: 'USER_NAME_IS_REQUIRED'

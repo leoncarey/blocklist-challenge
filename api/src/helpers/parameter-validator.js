@@ -1,4 +1,5 @@
 const Joi = require('joi')
+const { ObjectID } = require('mongodb')
 
 /*
  * Essa é uma lib que uso de um amigo.
@@ -135,6 +136,21 @@ class ParameterValidator {
     this.valid = _validation(schema, this.optional, this.value, this.errors, this.errorMessage, this.prefixError)
 
     if (!this.valid || !_isEmptyObject(this.value)) return this
+
+    this.valid = false
+    this.errors.push(this.prefixError + this.errorMessage.invalid)
+
+    return this
+  }
+
+  static isObjectId () {
+    const { isNullOrUndefined, valid } = _verifyNullOrUndefined(this.optional, this.value, this.errors, this.errorMessage, this.prefixError)
+
+    this.valid = valid
+
+    if (isNullOrUndefined) return this
+
+    if (ObjectID.isValid(this.value)) return this
 
     this.valid = false
     this.errors.push(this.prefixError + this.errorMessage.invalid)
