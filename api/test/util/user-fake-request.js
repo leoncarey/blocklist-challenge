@@ -1,5 +1,6 @@
 const getFakeResAndReq = () => {
   const req = {
+    method: 'GET',
     mongo: {
       deleteById: () => true,
       findWithPagination: () => true,
@@ -7,11 +8,14 @@ const getFakeResAndReq = () => {
       insertOne: () => true,
       ping: () => true,
       updateOne: () => true
-    }
+    },
+    path: '/users',
+    statusCode: 200
   }
 
   const res = {
     end: () => true,
+    set: () => true,
     status: () => ({
       send: () => true
     })

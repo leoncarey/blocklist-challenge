@@ -80,7 +80,7 @@ describe('Unit test for Error tools', function () {
 
   it('should return proper status code and message for NotFoundError', async function () {
     const _controller = (_req, _res) => {
-      throw new NotFoundError()
+      throw new NotFoundError([])
     }
 
     RouterTool.create(router, 'GET', ROUTE, _controller)
@@ -90,7 +90,7 @@ describe('Unit test for Error tools', function () {
       .get(ROUTE)
 
     assert.equal(404, response.status)
-    assert.equal('{"errorCode":"NOT_FOUND","message":"Not Found"}', response.text)
+    assert.equal('{"errorCode":"NOT_FOUND","message":"Not Found","errorDetail":[]}', response.text)
   })
 
   it('should return proper status code and message for NotFoundError with details', async function () {

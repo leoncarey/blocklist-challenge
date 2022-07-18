@@ -30,6 +30,7 @@ module.exports = {
   },
   userId: {
     invalid: 'USER_ID_INVALID',
+    notFound: 'USER_ID_NOT_FOUND',
     required: 'USER_ID_IS_REQUIRED'
   },
   userName: {

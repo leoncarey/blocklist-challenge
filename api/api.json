@@ -1,0 +1,405 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "version": "1.0.0",
+    "title": "Neoway Fullstack Test API",
+    "description": "O teste que fará Leo provar o seu valor como um guerreiro valente a desbravar terras longínquas"
+  },
+  "paths": {
+    "/users": {
+      "get": {
+        "summary": "Returns an user list",
+        "parameters": [
+          {
+            "name": "orderFilter",
+            "description": "Value to current sort filter",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "order",
+                "blocked",
+                "document",
+                "documentType",
+                "name",
+                "createAt",
+                "updateAt"
+              ]
+            }
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "description": "Value to current sort - **1: DESC / -1: ASC**",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "-1",
+                "1"
+              ]
+            }
+          },
+          {
+            "name": "offset",
+            "description": "Value to current pagination.",
+            "in": "query",
+            "schema": {
+              "type": "number",
+              "example": 0
+            }
+          },
+          {
+            "name": "limit",
+            "description": "Value to max items per page.",
+            "in": "query",
+            "schema": {
+              "type": "number",
+              "enum": [
+                10,
+                50,
+                100
+              ]
+            }
+          },
+          {
+            "name": "isBlocked",
+            "description": "Value to check if document is blocked.",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "example": false
+            }
+          },
+          {
+            "name": "userName",
+            "description": "Search user name in database.",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "example": "Senhor Stark"
+            }
+          },
+          {
+            "name": "document",
+            "description": "Search user document in database. CPF/CNPJ | Should not have special chars",
+            "in": "query",
+            "schema": {
+              "type": "number",
+              "example": 67470813071
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully on returns an user list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "items": {
+                      "type": "object",
+                      "description": "Items list returned",
+                      "properties": {
+                        "_id": {
+                          "type": "object",
+                          "example": "ObjectID('62d59f8e6dec6cd5a5144fea')"
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "Senhor Stark"
+                        },
+                        "document": {
+                          "type": "string",
+                          "example": "67470813071"
+                        },
+                        "documentType": {
+                          "type": "string",
+                          "example": "CPF/CNPJ"
+                        },
+                        "blocked": {
+                          "type": "boolean",
+                          "example": false
+                        },
+                        "order": {
+                          "type": "boolean",
+                          "example": false
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "example": "2022-07-18T17:59:42.309Z"
+                        },
+                        "updatedAt": {
+                          "type": "string",
+                          "example": "2022-07-18T17:59:42.309Z"
+                        }
+                      }
+                    },
+                    "totalCount": {
+                      "type": "integer",
+                      "description": "Total items returned",
+                      "example": 5
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Validation Error"
+                    },
+                    "errorCode": {
+                      "type": "string",
+                      "example": "VALIDATION_ERROR"
+                    },
+                    "errorDetail": {
+                      "type": "array",
+                      "example": [
+                        "DOCUMENT_INVALID",
+                        "IS_BLOCKED_INVALID",
+                        "LIMIT_INVALID",
+                        "OFFSET_INVALID",
+                        "ORDER_INVALID",
+                        "ORDER_FILTER_INVALID",
+                        "USER_NAME_INVALID"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Should save user in database",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "userName": {
+                    "type": "string",
+                    "description": "Set user name",
+                    "example": "New User"
+                  },
+                  "document": {
+                    "type": "string",
+                    "description": "Set user document in database. CPF/CNPJ | Should not have special chars",
+                    "example": "67470813071"
+                  },
+                  "blocked": {
+                    "type": "boolean",
+                    "description": "Set if user document is blocked",
+                    "example": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully on insert a new user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "object",
+                      "example": "ObjectID('62d59f8e6dec6cd5a5144fea')"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Validation Error"
+                    },
+                    "errorCode": {
+                      "type": "string",
+                      "example": "VALIDATION_ERROR"
+                    },
+                    "errorDetail": {
+                      "type": "array",
+                      "example": [
+                        "USER_NAME_INVALID",
+                        "USER_NAME_IS_REQUIRED",
+                        "DOCUMENT_INVALID",
+                        "DOCUMENT_IS_REQUIRED",
+                        "DOCUMENT_ALREADY_EXISTS",
+                        "IS_BLOCKED_INVALID",
+                        "IS_BLOCKED_IS_REQUIRED"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{userId}": {
+      "patch": {
+        "summary": "Update user by id",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "blocked": {
+                    "type": "boolean",
+                    "description": "Send blocked to change document user state",
+                    "example": false
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "userId",
+            "required": true,
+            "description": "Send user id to delete",
+            "in": "path",
+            "schema": {
+              "type": "string",
+              "example": "62d59f8e6dec6cd5a5144fea"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully on update an user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "userDeleted": {
+                      "type": "object",
+                      "example": "ObjectID('62d59f8e6dec6cd5a5144fea')"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Validation Error"
+                    },
+                    "errorCode": {
+                      "type": "string",
+                      "example": "VALIDATION_ERROR"
+                    },
+                    "errorDetail": {
+                      "type": "array",
+                      "example": [
+                        "USER_ID_INVALID",
+                        "USER_ID_NOT_FOUND",
+                        "USER_ID_IS_REQUIRED"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete user by id",
+        "parameters": [
+          {
+            "name": "userId",
+            "required": true,
+            "description": "Send user id to delete",
+            "in": "path",
+            "schema": {
+              "type": "string",
+              "example": "62d59f8e6dec6cd5a5144fea"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully on delete an user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "userDeleted": {
+                      "type": "object",
+                      "example": "ObjectID('62d59f8e6dec6cd5a5144fea')"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Validation Error"
+                    },
+                    "errorCode": {
+                      "type": "string",
+                      "example": "VALIDATION_ERROR"
+                    },
+                    "errorDetail": {
+                      "type": "array",
+                      "example": [
+                        "USER_ID_INVALID",
+                        "USER_ID_NOT_FOUND",
+                        "USER_ID_IS_REQUIRED"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,33 +1,38 @@
 const { Parser, DocumentValidator, ParameterValidator } = require('../../helpers')
-const { validationErrors } = require('../../constants')
+const { validationErrors, mongoConfig } = require('../../constants')
 
 class PostUserParameters {
-  static processParameters (req) {
+  static async processParameters (req) {
     this.errors = []
 
     this.userName = req.body?.userName
     this.document = req.body?.document
     this.blocked = req.body?.blocked && Parser.parseBoolean(req.body.blocked)
 
-    _validate(this)
+    await _validate(this, req)
 
     return this
   }
 }
 
-const _validate = (parameters) => {
+const _validate = async (parameters, req) => {
   // UserName validate format
   ParameterValidator
     .validate(parameters.userName, validationErrors.userName, parameters.errors)
     .isString()
 
   // Document validate format
-  ParameterValidator
+  await ParameterValidator
     .validate(parameters.document, validationErrors.document, parameters.errors)
     .isString()
-    .isValid(() => {
+    .isValid(async () => {
       if (!DocumentValidator.validateDocument(parameters.document)) {
         parameters.errors.push(validationErrors.document.invalid)
+      }
+
+      const alreadyExists = await req.mongo.findOne({ document: parameters.document }, mongoConfig.COLLECTION)
+      if (alreadyExists) {
+        parameters.errors.push(validationErrors.document.already)
       }
     })
 

@@ -3,7 +3,7 @@ const sandbox = require('sinon').createSandbox()
 
 const { validationErrors } = require('../../../../src/constants')
 const { UserController } = require('../../../../src/controllers')
-const { ValidationError, ServiceUnavailableError } = require('../../../../src/exceptions')
+const { ValidationError, NotFoundError } = require('../../../../src/exceptions')
 const { DeleteUserParameters } = require('../../../../src/parameters')
 const getFakeResAndReq = require('../../../util/user-fake-request')
 
@@ -42,7 +42,7 @@ describe('Unit tests for UserController.get', function () {
   it('should return error if has validation error', async function () {
     DeleteUserParameters.processParameters.restore()
     sandbox.stub(DeleteUserParameters, 'processParameters').returns({
-      errors: [validationErrors.userId.invalid]
+      errors: [validationErrors.userId.notFound]
     })
     await assert.rejects(UserController.delete(req, res), ValidationError)
 
@@ -54,7 +54,7 @@ describe('Unit tests for UserController.get', function () {
     req.mongo.deleteById.restore()
     sandbox.stub(req.mongo, 'deleteById').returns(false)
 
-    await assert.rejects(UserController.delete(req, res), ValidationError)
+    await assert.rejects(UserController.delete(req, res), NotFoundError)
 
     assert(DeleteUserParameters.processParameters.calledOnce)
     assert(req.mongo.deleteById.calledOnce)

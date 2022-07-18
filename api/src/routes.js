@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const { RouterTool } = require('./middleware')
 const swaggerUi = require('swagger-ui-express')
-const swaggerDocument = require('./api.json')
+const swaggerDocument = require('../api.json')
 
 const {
   HealthzController,

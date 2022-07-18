@@ -1,5 +1,5 @@
 const { GetUserParameters, PostUserParameters, DeleteUserParameters, UpdateUserParameters } = require('../parameters')
-const { ValidationError } = require('../exceptions')
+const { ValidationError, NotFoundError } = require('../exceptions')
 const { mongoConfig, validationErrors } = require('../constants')
 const { ObjectId } = require('mongodb')
 
@@ -15,7 +15,7 @@ class UserController {
   }
 
   static async post (req, res) {
-    const parameters = PostUserParameters.processParameters(req)
+    const parameters = await PostUserParameters.processParameters(req)
     if (parameters.errors.length !== 0) {
       throw new ValidationError(parameters.errors)
     }
@@ -30,7 +30,7 @@ class UserController {
     }
 
     const insertedUser = await req.mongo.insertOne(newUser, mongoConfig.COLLECTION)
-    return res.status(200).send({ _id: insertedUser })
+    return res.status(201).send({ _id: insertedUser })
   }
 
   static async delete (req, res) {
@@ -41,7 +41,7 @@ class UserController {
 
     const userDeleted = await req.mongo.deleteById(parameters.userId, mongoConfig.COLLECTION)
     if (!userDeleted) {
-      throw new ValidationError(validationErrors.userId.invalid)
+      throw new NotFoundError(validationErrors.userId.notFound)
     }
 
     res.status(200).send({ userDeleted: parameters.userId })
