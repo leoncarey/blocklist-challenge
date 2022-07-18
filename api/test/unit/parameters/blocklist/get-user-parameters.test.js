@@ -13,7 +13,8 @@ describe('Tests for GetUserParameters', function () {
       isBlocked: true,
       offset: 0,
       order: -1,
-      orderFilter: 'order'
+      orderFilter: 'order',
+      userName: 'Foo'
     }
   })
 
@@ -91,6 +92,14 @@ describe('Tests for GetUserParameters', function () {
       req.query.document = '854113564545465456465'
       const parameters = GetUserParameters.processParameters(req)
       assert.deepEqual(parameters.errors, [validationErrors.document.invalid])
+    })
+  })
+
+  describe('Tests for userName', function () {
+    it('should return invalid error with invalid userName', function () {
+      req.query.userName = 854113
+      const parameters = GetUserParameters.processParameters(req)
+      assert.deepEqual(parameters.errors, [validationErrors.userName.invalid])
     })
   })
 })

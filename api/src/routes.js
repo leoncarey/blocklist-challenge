@@ -1,4 +1,6 @@
 const router = require('express').Router()
+const { RouterTool } = require('./middleware')
+
 const swaggerUi = require('swagger-ui-express')
 const swaggerDocument = require('./api.json')
 
@@ -11,10 +13,10 @@ router.use('/docs', swaggerUi.serve)
 router.get('/docs', swaggerUi.setup(swaggerDocument))
 
 // Healthz
-router.route('/healthz').get(HealthzController.get)
+RouterTool.create(router, 'GET', '/healthz', HealthzController.get)
 
 // UserController
-router.route('/users').get(UserController.get)
-router.route('/users').post(UserController.post)
+RouterTool.create(router, 'GET', '/users', UserController.get)
+RouterTool.create(router, 'POST', '/users', UserController.post)
 
 module.exports = router

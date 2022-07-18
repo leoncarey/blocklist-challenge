@@ -10,6 +10,7 @@ class GetUserParameters {
     this.offset = req.query?.offset && Parser.parseInt(req.query.offset)
     this.limit = req.query?.limit && Parser.parseInt(req.query.limit)
     this.isBlocked = req.query?.isBlocked && Parser.parseBoolean(req.query.isBlocked)
+    this.userName = req.query.userName
     this.document = req.query.document
 
     _validate(this)
@@ -64,6 +65,12 @@ const _validate = (parameters) => {
         parameters.errors.push(validationErrors.document.invalid)
       }
     })
+
+  // UserName validate format
+  ParameterValidator
+    .validate(parameters.userName, validationErrors.userName, parameters.errors)
+    .isOptional()
+    .isString()
 }
 
 module.exports = GetUserParameters

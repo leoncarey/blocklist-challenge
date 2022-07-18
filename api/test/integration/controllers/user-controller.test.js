@@ -17,9 +17,9 @@ describe('Integration test for UserController', function () {
       const options = {
         method: 'get',
         params: {
-          document: '67470813071',
           isBlocked: false,
-          limit: 2
+          limit: 2,
+          userName: 'Senhor Stark'
         },
         url: `${process.env.SERVICE_API_URL}/users`
       }
@@ -29,7 +29,7 @@ describe('Integration test for UserController', function () {
         response = await axios(options)
       })
 
-      const userSelected = await _findOne(connection, { document: options.params.document })
+      const userSelected = await _findOne(connection, { name: options.params.userName })
 
       assert.notEqual(response.data.items, null)
       assert.equal(response.data.items[0]._id.toString(), userSelected._id.toString())
