@@ -1,13 +1,17 @@
 const app = require('./app')
 const { logger } = require('./helpers')
+const { MetricsTool } = require('./middleware')
 
 const PORT = process.env.SERVER_PORT || 11000
+const metricsInterval = MetricsTool.collectMetrics()
 
 const server = app.listen(PORT, () => {
   logger.info('Http server on deline')
 })
 
 const shutdownHandler = () => {
+  clearInterval(metricsInterval)
+
   server.close((error) => {
     try {
       if (error) {

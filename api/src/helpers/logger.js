@@ -1,11 +1,9 @@
 const winston = require('winston')
 
 const loggerOptions = {
+  format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
   level: 'debug',
-  transports: [
-    new winston.transports.File({ filename: 'error.log', level: 'error' }),
-    new winston.transports.File({ filename: 'combined.log' })
-  ]
+  transports: [new winston.transports.Console()]
 }
 
 const logger = winston.createLogger(loggerOptions)

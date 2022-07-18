@@ -67,7 +67,7 @@ describe('Unit tests for router tool', function () {
 
       assert.equal(200, response.status)
     })
-
-    const _controller = (_req, response) => response.end()
   })
 })
+
+const _controller = (_req, res) => res.end()

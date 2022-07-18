@@ -10,7 +10,7 @@ services:
     ports:
       - 27017:27017
     volumes:
-      - ./api/data/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+      - ./api/data/mongo/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
 
   api:
     build:
@@ -19,7 +19,7 @@ services:
     container_name: neoway-fullstack-api
     restart: always
     ports:
-      - 11000:3000
+      - 11000:11000
     depends_on:
       - mongo
     networks:

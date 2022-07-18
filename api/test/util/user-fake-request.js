@@ -5,11 +5,13 @@ const getFakeResAndReq = () => {
       findWithPagination: () => true,
       getLastNextOrderSequence: () => true,
       insertOne: () => true,
+      ping: () => true,
       updateOne: () => true
     }
   }
 
   const res = {
+    end: () => true,
     status: () => ({
       send: () => true
     })
