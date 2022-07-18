@@ -1,6 +1,6 @@
 const assert = require('assert').strict
 const sandbox = require('sinon').createSandbox()
-const { ObjectID } = require('mongodb')
+const { ObjectId } = require('mongodb')
 
 const { ParameterValidator } = require('../../../src/helpers')
 
@@ -471,7 +471,7 @@ describe('ParameterValidator tool test suite', function () {
 
   describe('ObjectId', function () {
     it('should not return errors when given an ObjectId', function () {
-      const input = new ObjectID()
+      const input = new ObjectId()
       ParameterValidator.validate(input, ERROR_MSGS, errors).isObjectId()
       assert.equal(errors.length, 0)
     })

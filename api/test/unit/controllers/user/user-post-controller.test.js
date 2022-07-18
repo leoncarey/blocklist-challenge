@@ -1,6 +1,6 @@
 const assert = require('assert').strict
 const sandbox = require('sinon').createSandbox()
-const { ObjectID } = require('mongodb')
+const { ObjectId } = require('mongodb')
 
 const { cpf } = require('cpf-cnpj-validator')
 const validationErrorsConstants = require('../../../../src/constants/validation-errors-constants')
@@ -29,7 +29,7 @@ describe('Unit tests for UserController.post', function () {
 
     sandbox.stub(PostUserParameters, 'processParameters').returns(fakeParameters)
     sandbox.stub(req.mongo, 'getLastNextOrderSequence').returns(2)
-    sandbox.stub(req.mongo, 'insertOne').returns(new ObjectID())
+    sandbox.stub(req.mongo, 'insertOne').returns(new ObjectId())
 
     sandbox.spy(res)
   })

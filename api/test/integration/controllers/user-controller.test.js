@@ -5,7 +5,7 @@ const { cpf } = require('cpf-cnpj-validator')
 const { MongoConnection } = require('../../../src/repository')
 const { _findOne, _deleteOne, _insertOne } = require('../../util/mongo-actions')
 
-describe('Integration test for UserController', function () {
+describe('Integration test for UserController E2E', function () {
   let connection = {}
 
   before(async function () {
@@ -56,9 +56,9 @@ describe('Integration test for UserController', function () {
       const insertedUser = await _findOne(connection, { document: options.data.document })
 
       assert.notEqual(response.data, null)
-      assert.equal(response.data.id, insertedUser._id.toString())
+      assert.equal(response.data._id.toString(), insertedUser._id.toString())
 
-      await _deleteOne(connection, response.data.id)
+      await _deleteOne(connection, response.data._id.toString())
     })
   })
 
@@ -83,11 +83,38 @@ describe('Integration test for UserController', function () {
         response = await axios(options)
       })
 
-      const userNoMore = await _findOne(connection, { _id: insertedId.toString() })
+      const userNoMore = await _findOne(connection, { _id: insertedId })
 
       assert.notEqual(response.data.userDeleted, null)
       assert.equal(response.data.userDeleted, insertedId.toString())
       assert.equal(userNoMore, null)
+    })
+  })
+
+  describe('update', function () {
+    it('should return 200 when success', async function () {
+      const userToChange = await _findOne(connection, {})
+
+      const options = {
+        data: {
+          blocked: !(userToChange.blocked)
+        },
+        method: 'patch',
+        params: {
+          userId: userToChange._id.toString()
+        },
+        url: `${process.env.SERVICE_API_URL}/users/${userToChange._id.toString()}`
+      }
+
+      let response = {}
+      await assert.doesNotReject(async () => {
+        response = await axios(options)
+      })
+
+      const userChanged = await _findOne(connection, { _id: userToChange._id })
+
+      assert.equal(response.data._id.toString(), userChanged._id.toString())
+      assert.notEqual(userToChange.blocked, userChanged.blocked)
     })
   })
 })

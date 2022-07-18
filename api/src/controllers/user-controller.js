@@ -1,6 +1,7 @@
-const { GetUserParameters, PostUserParameters, DeleteUserParameters } = require('../parameters')
+const { GetUserParameters, PostUserParameters, DeleteUserParameters, UpdateUserParameters } = require('../parameters')
 const { ValidationError } = require('../exceptions')
 const { mongoConfig, validationErrors } = require('../constants')
+const { ObjectId } = require('mongodb')
 
 class UserController {
   static async get (req, res) {
@@ -29,7 +30,7 @@ class UserController {
     }
 
     const insertedUser = await req.mongo.insertOne(newUser, mongoConfig.COLLECTION)
-    return res.status(200).send({ id: insertedUser.toString() })
+    return res.status(200).send({ _id: insertedUser })
   }
 
   static async delete (req, res) {
@@ -44,6 +45,21 @@ class UserController {
     }
 
     res.status(200).send({ userDeleted: parameters.userId })
+  }
+
+  static async update (req, res) {
+    const parameters = await UpdateUserParameters.processParameters(req)
+    if (parameters.errors.length !== 0) {
+      throw new ValidationError(parameters.errors)
+    }
+
+    const userChanges = {
+      blocked: parameters.blocked
+    }
+
+    const { _id } = await req.mongo.updateOne({ _id: new ObjectId(parameters.userId) }, userChanges, mongoConfig.COLLECTION)
+
+    res.status(200).send({ _id })
   }
 }
 

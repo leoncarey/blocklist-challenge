@@ -4,7 +4,7 @@ const { cpf } = require('cpf-cnpj-validator')
 const { MongoRepository, MongoConnection } = require('../../../src/repository')
 const { _insertMany, _deleteMany, _insertOne, _findOne, _findMany } = require('../../util/mongo-actions')
 const { mongoConfig } = require('../../../src/constants')
-const { ObjectID } = require('bson')
+const { ObjectId } = require('mongodb')
 
 const newUsersList = [
   {
@@ -64,6 +64,14 @@ describe('Mongo Repository integration tests', function () {
 
     assert.notEqual(totalCount, null)
     assert.equal(totalCount, 1)
+  })
+
+  it('should return user searched with findOne', async function () {
+    const { insertedId } = await _insertOne(connection, newUsersList[0])
+    const userFound = await repository.findOne({ _id: new ObjectId(insertedId) }, mongoConfig.COLLECTION)
+
+    assert.notEqual(userFound, null)
+    assert.equal(userFound.name, newUsersList[0].name)
   })
 
   it('should delete user with deleteById', async function () {
@@ -144,7 +152,7 @@ describe('Mongo Repository integration tests', function () {
 
     const newName = 'Zé'
 
-    const { _id } = await repository.updateOne({ _id: new ObjectID(insertedId) }, { name: newName }, mongoConfig.COLLECTION)
+    const { _id } = await repository.updateOne({ _id: new ObjectId(insertedId) }, { name: newName }, mongoConfig.COLLECTION)
 
     const { name } = await _findOne(connection, { _id })
     assert.equal(name, newName)

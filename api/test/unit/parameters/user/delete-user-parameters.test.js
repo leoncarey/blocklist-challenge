@@ -1,5 +1,5 @@
 const assert = require('assert').strict
-const { ObjectID } = require('mongodb')
+const { ObjectId } = require('mongodb')
 
 const { DeleteUserParameters } = require('../../../../src/parameters')
 const { validationErrors } = require('../../../../src/constants')
@@ -9,7 +9,7 @@ describe('Unit tests for DeleteParameters', function () {
 
   beforeEach(function () {
     req.params = {
-      userId: new ObjectID()
+      userId: new ObjectId()
     }
   })
 

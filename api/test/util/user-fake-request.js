@@ -4,7 +4,8 @@ const getFakeResAndReq = () => {
       deleteById: () => true,
       findWithPagination: () => true,
       getLastNextOrderSequence: () => true,
-      insertOne: () => true
+      insertOne: () => true,
+      updateOne: () => true
     }
   }
 

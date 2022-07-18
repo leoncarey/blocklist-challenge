@@ -19,5 +19,6 @@ RouterTool.create(router, 'GET', '/healthz', HealthzController.get)
 RouterTool.create(router, 'GET', '/users', UserController.get)
 RouterTool.create(router, 'POST', '/users', UserController.post)
 RouterTool.create(router, 'DELETE', '/users/:userId', UserController.delete)
+RouterTool.create(router, 'PATCH', '/users/:userId', UserController.update)
 
 module.exports = router

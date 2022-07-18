@@ -1,4 +1,4 @@
-const { ObjectID } = require('mongodb')
+const { ObjectId } = require('mongodb')
 
 class MongoRepository {
   static setRepository (database) {
@@ -68,6 +68,10 @@ class MongoRepository {
     }
   }
 
+  static findOne (filterItem, collection) {
+    return this.database.collection(collection).findOne(filterItem)
+  }
+
   static async insertOne (value, collection) {
     let datedItem = _insertCreatedAt(value)
     datedItem = _insertLastUpdate(value)
@@ -97,7 +101,7 @@ class MongoRepository {
   }
 
   static async deleteById (id, collection) {
-    const databaseResult = await this.database.collection(collection).deleteOne({ _id: ObjectID(id) })
+    const databaseResult = await this.database.collection(collection).deleteOne({ _id: ObjectId(id) })
     return databaseResult.deletedCount > 0
   }
 
