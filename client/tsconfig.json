@@ -5,6 +5,7 @@
     "module": "ESNext",
     "moduleResolution": "Node",
     "strict": true,
+    "types": ["vite/client"],
     "jsx": "preserve",
     "sourceMap": true,
     "resolveJsonModule": true,
@@ -17,6 +18,7 @@
     "skipLibCheck": true
   },
   "include": [
+    "./",
     "src/**/*.ts",
     "src/**/*.d.ts",
     "src/**/*.tsx",
@@ -24,16 +26,6 @@
     "auto-imports.d.ts",
     "components.d.ts"
   ],
-  "paths": {
-    "@/components": ["./components"],
-    "@/components/*": ["./components/*"],
-    "@/pages": ["./pages"],
-    "@/pages/*": ["./pages/*"],
-    "@/screens": ["./screens"],
-    "@/screens/*": ["./screens/*"],
-    "@/services": ["./services"],
-    "@/services/*": ["./services/*"]
-  },
   "references": [
     {
       "path": "./tsconfig.node.json"
