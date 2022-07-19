@@ -7,3 +7,6 @@ RUN npm install
 COPY . .
 CMD ["npm", "run", "serve"]
 
+## Test/Coverage
+FROM base AS test
+CMD ["npm", "run", "coverage"]

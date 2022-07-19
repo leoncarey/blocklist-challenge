@@ -1,0 +1,39 @@
+{
+  "plugins": [
+    "cypress"
+  ],
+  "env": {
+    "mocha": true,
+    "cypress/global": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "standard",
+    "plugin:@typescript-eslint/recommended",
+    "mocha",
+    "plugin:mocha/recommended"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 2020
+  },
+  "rules": {
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-var-requires": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "mocha/no-skipped-tests": "off",
+    "mocha/no-setup-in-describe": "off",
+    "strict": "off"
+  },
+  "overrides": [
+    {
+      "files": [
+        "test/**/*.*"
+      ],
+      "rules": {
+        "func-names": "off",
+        "prefer-arrow-callback": "off"
+      }
+    }
+  ],
+  "noInlineConfig": true
+}

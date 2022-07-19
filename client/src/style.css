@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color: #213547;
+  background-color: #EDF2F7;
+}
+
+.content-wrapper {
+  @apply w-full;
+}
+
+.inner-content-wrapper {
+  @apply w-[auto] lg:w-[1024px] mx-[40px] lg:mx-[auto];
+}

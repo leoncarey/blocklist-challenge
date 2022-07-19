@@ -8,8 +8,16 @@ test-api:
 	docker-compose build --pull
 	docker-compose up test-api
 	@rm -Rf ./api/coverage
-	$(eval ID=$(shell docker ps -a | grep neoway-fullstack-test | sed 's/.*neoway-fullstack-test//' | head -n 1))
+	$(eval ID=$(shell docker ps -a | grep neoway-fullstack-test-api | sed 's/.*neoway-fullstack-test-api//' | head -n 1))
 	docker cp neoway-fullstack-test$(ID):/app/coverage ./api
+
+test-client:
+	@rm -Rf ./client/.nyc_output
+	docker-compose build --pull
+	docker-compose up test-client
+	@rm -Rf ./client/coverage
+	$(eval ID=$(shell docker ps -a | grep neoway-fullstack-test-client | sed 's/.*neoway-fullstack-test-client//' | head -n 1))
+	docker cp neoway-fullstack-test-client$(ID):/app/coverage ./client
 
 
 run-client:

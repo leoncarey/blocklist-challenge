@@ -1,5 +1,11 @@
 {
-  "extension": ["js"],
+  "extension": [
+    "js",
+    "ts"
+  ],
   "timeout": "2000",
-  "_": ["./api/test/**/*.test.js"]
+  "_": [
+    "./api/test/**/*.test.js",
+    "./client/test/**/*.spec.ts"
+  ]
 }

@@ -1,0 +1,8 @@
+.data-table {
+  @apply align-middle inline-block w-full shadow overflow-hidden sm:rounded-lg border-b border-gray-200 mb-20;
+
+  .el-table__body col,
+  .el-table__header col {
+    @apply min-w-[170px] #{!important};;
+  }
+}
