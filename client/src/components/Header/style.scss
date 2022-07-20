@@ -4,4 +4,8 @@
   .title {
     @apply text-2xl font-bold text-center lg:text-left mb-2 lg:mb-0;
   }
+
+  .fields-header {
+    @apply flex items-center justify-between;
+  }
 }

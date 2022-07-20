@@ -14,3 +14,12 @@
 .inner-content-wrapper {
   @apply w-[auto] lg:w-[1024px] mx-[40px] lg:mx-[auto];
 }
+
+/* Dialog */
+.el-dialog {
+  @apply w-[90%] lg:w-[35%];
+}
+
+.el-message-box {
+  @apply w-[90%] sm:w-[420px];
+}

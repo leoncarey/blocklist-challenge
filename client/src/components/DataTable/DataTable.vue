@@ -13,7 +13,7 @@
               Bloquerar
             </el-button>
 
-            <ModalConfirmDelete user-id="lalal" user-name="Lulu" />
+            <ModalDeleteUser user-id="lalal" user-name="Lulu" />
           </div>
         </template>
       </el-table-column>
@@ -22,10 +22,10 @@
 </template>
 
 <script lang="ts">
-import ModalConfirmDelete from '@/components/ModalConfirmDelete/ModalConfirmDelete.vue'
+import ModalDeleteUser from '@/components/ModalDeleteUser/ModalDeleteUser.vue'
 
 export default {
-  components: { ModalConfirmDelete },
+  components: { ModalDeleteUser },
   setup() {
     const tableData = [
       {

@@ -1,12 +1,12 @@
-u
 <template>
-  <div class="modal-confirm-deletion">
+  <div class="modal-delete-user">
     <el-button size="small" type="danger" plain @click="open">Excluir</el-button>
   </div>
 </template>
 
 <script lang="ts">
 import { ElMessage, ElMessageBox } from 'element-plus'
+import { UserService } from '../../services'
 
 export default {
   props: {
@@ -29,15 +29,27 @@ export default {
         type: 'warning',
       })
         .then(() => {
-          ElMessage({
-            type: 'success',
-            message: 'Usuário excluído com sucesso!',
-          })
+          this.deleteUser()
         })
         .catch(() => {
           ElMessage({
             type: 'info',
             message: 'Exclusão cancelada',
+          })
+        })
+    },
+    deleteUser() {
+      UserService.deleteUser(this.userId)
+        .then(() => {
+          ElMessage({
+            type: 'success',
+            message: 'Usuário excluído com sucesso!',
+          })
+        })
+        .catch((error) => {
+          ElMessage({
+            type: 'error',
+            message: `Houve um problema ao tentar excluir o usuário: [${error.message}]`,
           })
         })
     },
