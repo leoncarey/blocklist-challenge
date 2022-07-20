@@ -5,6 +5,7 @@
     <el-form :model="formAddUser" label-width="160px">
       <el-form-item label="Nome do usuário">
         <el-input v-model="formAddUser.userName" />
+        <span class="error-field" v-if="v$.userName.$errors.length !== 0">{{ v$.userName.$errors[0].$message }}</span>
       </el-form-item>
 
       <el-form-item label="Documento do usuário">
@@ -14,6 +15,7 @@
           v-maska="{ mask: ['###.###.###-##', '##.###.###/####-##'] }"
           clearable
         />
+        <span class="error-field" v-if="v$.document.$errors.length !== 0">{{ v$.document.$errors[0].$message }}</span>
       </el-form-item>
 
       <el-form-item label="Usuário bloqueado?">
@@ -36,28 +38,48 @@ import { UserService } from '../../services'
 import { Avatar } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
 import { maska } from 'maska'
-
-const modalAddUser = ref(false)
-
-const formAddUser = reactive({
-  userName: '',
-  document: '',
-  blocked: false,
-})
+import { useVuelidate } from '@vuelidate/core'
+import { required } from '@vuelidate/validators'
 
 export default {
   directives: {
     maska,
   },
   setup() {
+    const modalAddUser = ref(false)
+
+    const formAddUser = reactive({
+      userName: '',
+      document: '',
+      blocked: false,
+    })
+    const rules = {
+      userName: { required },
+      document: { required },
+    }
+
+    const v$ = useVuelidate(rules, formAddUser)
+
     return {
       Avatar,
       modalAddUser,
       formAddUser,
+      v$,
     }
   },
   methods: {
     onSubmit() {
+      this.v$.$validate()
+      console.log(this.formAddUser.userName)
+
+      if (!this.v$.$error) {
+        alert('Form successfully submitted.')
+      } else {
+        alert('Form failed validation')
+      }
+
+      return true
+
       UserService.saveUser({
         userName: this.formAddUser.userName,
         document: this.formAddUser.document.replace(/\D/gu, ''),
@@ -79,3 +101,7 @@ export default {
   },
 }
 </script>
+
+<style>
+@import './style.scss';
+</style>
