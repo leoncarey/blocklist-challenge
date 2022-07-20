@@ -9,8 +9,8 @@ describe('Unit tests for Header', function () {
   it('should check if title is in document', () => {
     const wrapper = mount(Header, {
       global: {
-        plugins: [ElementPlus]
-      }
+        plugins: [ElementPlus],
+      },
     })
 
     const titleIsIt = wrapper.get('.title').html()

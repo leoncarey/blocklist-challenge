@@ -1,5 +1,14 @@
 {
   "root": true,
+  "parser": "@typescript-eslint/parser",
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "node": true
+  },
+  "plugins": [
+    "prettier"
+  ],
   "extends": [
     "eslint:recommended",
     "plugin:vue/base",
@@ -9,21 +18,42 @@
     "plugin:vue/vue3-recommended",
     "plugin:vue/vue3-essential",
     "@vue/eslint-config-typescript",
-    "plugin:vue/strongly-recommended"
+    "plugin:vue/strongly-recommended",
+    "plugin:@typescript-eslint/recommended"
   ],
   "parserOptions": {
-    "ecmaVersion": 2020
+    "ecmaVersion": 2021,
+    "sourceType": "module"
   },
   "rules": {
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-var-requires": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
-    "vue/max-attributes-per-line": "off",
     "strict": "off",
+    "vue/max-attributes-per-line": "off",
+    "@typescript-eslint/rule-name": "error",
+    "vue/prefer-true-attribute-shorthand": [
+      "always"
+    ],
     "vue/comment-directive": [
       "error",
       {
         "reportUnusedDisableDirectives": false
+      }
+    ],
+    "@typescript-eslint/no-unused-vars": [
+      "warn",
+      {
+        "varsIgnorePattern": "^_",
+        "argsIgnorePattern": "^_",
+        "ignoreRestSiblings": true,
+        "args": "after-used"
+      }
+    ],
+    "prettier/prettier": [
+      "warn",
+      {
+        "endOfLine": "auto"
       }
     ]
   },

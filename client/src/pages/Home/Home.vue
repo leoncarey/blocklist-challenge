@@ -8,13 +8,13 @@
 </template>
 
 <script lang="ts">
-import Header from '../../components/Header/Header.vue';
-import ListUserScreen from '../../screens/ListScreen/ListScreen.vue';
+import Header from '../../components/Header/Header.vue'
+import ListUserScreen from '../../screens/ListScreen/ListScreen.vue'
 
 export default {
   components: {
     Header,
-    ListUserScreen
-  }
+    ListUserScreen,
+  },
 }
 </script>

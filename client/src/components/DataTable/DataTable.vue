@@ -25,8 +25,7 @@
 import ModalConfirmDelete from '@/components/ModalConfirmDelete/ModalConfirmDelete.vue'
 
 export default {
-  components: {    ModalConfirmDelete
-  },
+  components: { ModalConfirmDelete },
   setup() {
     const tableData = [
       {
@@ -35,7 +34,7 @@ export default {
         document: '12345678915',
         documentType: 'CPF',
         blocked: true,
-        order: 1
+        order: 1,
       },
       {
         _id: '84as65d45s4d65as4d6',
@@ -43,8 +42,8 @@ export default {
         document: '12345678915',
         documentType: 'CPF',
         blocked: false,
-        order: 0
-      }
+        order: 0,
+      },
     ]
 
     for (let us = 0; us < 20; us++) {
@@ -52,9 +51,9 @@ export default {
     }
 
     return {
-      tableData
+      tableData,
     }
-  }
+  },
 }
 </script>
 

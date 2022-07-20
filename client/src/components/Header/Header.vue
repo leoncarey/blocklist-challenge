@@ -1,13 +1,15 @@
 <template>
   <div class="header">
     <div class="inner-header">
-      <h1 class="title">
-        Blockclist de CPF/CNPJ
-      </h1>
+      <h1 class="title">Blockclist de CPF/CNPJ</h1>
 
       <el-row>
-        <el-input v-model="searchInput" class="w-50 m-2" placeholder="Digite o CPF/CNPF desejado..."
-          :prefix-icon="Search">
+        <el-input
+          v-model="searchInput"
+          class="w-50 m-2"
+          placeholder="Digite o CPF/CNPF desejado..."
+          :prefix-icon="Search"
+        >
           <template #append>
             <el-button :icon="Refresh" />
           </template>
@@ -18,7 +20,7 @@
 </template>
 
 <script lang="ts">
-import { Search, Refresh } from '@element-plus/icons-vue';
+import { Search, Refresh } from '@element-plus/icons-vue'
 import { ref } from 'vue'
 
 const searchInput = ref('')
@@ -28,9 +30,9 @@ export default {
     return {
       Search,
       Refresh,
-      searchInput
+      searchInput,
     }
-  }
+  },
 }
 </script>
 

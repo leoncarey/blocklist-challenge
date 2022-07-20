@@ -5,12 +5,12 @@
 </template>
 
 <script lang="ts">
-import DataTable from "../../components/DataTable/DataTable.vue"
+import DataTable from '../../components/DataTable/DataTable.vue'
 
 export default {
   components: {
-    DataTable
-  }
+    DataTable,
+  },
 }
 </script>
 

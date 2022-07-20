@@ -5,43 +5,23 @@
     "module": "ESNext",
     "moduleResolution": "Node",
     "strict": true,
-    "types": [
-      "vite/client"
-    ],
+    "types": ["vite/client"],
     "jsx": "preserve",
     "sourceMap": true,
     "noImplicitThis": false,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "esModuleInterop": true,
-    "lib": [
-      "ESNext",
-      "DOM"
-    ],
+    "lib": ["ESNext", "DOM"],
     "skipLibCheck": true
   },
-  "include": [
-    "./",
-    "src/**/*.ts",
-    "src/**/*.d.ts",
-    "src/**/*.tsx",
-    "src/**/*.vue",
-    "types/**/*.d.ts"
-  ],
+  "include": ["./", "src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "types/**/*.d.ts"],
   "paths": [
     {
-      "@/components/*": [
-        "./src/components/*"
-      ],
-      "@/pages/*": [
-        "./src/pages/*"
-      ],
-      "@/screens/*": [
-        "./src/screens/*"
-      ],
-      "@/services/*": [
-        "./src/services/*"
-      ]
+      "@/components/*": ["./src/components/*"],
+      "@/pages/*": ["./src/pages/*"],
+      "@/screens/*": ["./src/screens/*"],
+      "@/services/*": ["./src/services/*"],
     }
   ],
   "references": [

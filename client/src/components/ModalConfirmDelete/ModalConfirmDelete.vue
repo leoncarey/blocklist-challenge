@@ -1,8 +1,7 @@
+u
 <template>
   <div class="modal-confirm-deletion">
-    <el-button size="small" type="danger" plain @click="open">
-      Excluir
-    </el-button>
+    <el-button size="small" type="danger" plain @click="open">Excluir</el-button>
   </div>
 </template>
 
@@ -14,36 +13,34 @@ export default {
     userName: {
       type: String,
       default: '',
-      require: true
+      require: true,
     },
     userId: {
       type: String,
       default: '',
-      require: true
-    }
+      require: true,
+    },
   },
   methods: {
     open() {
-        ElMessageBox.confirm(
-          `Você deseja deletar o usuário: ${this.userName}. Continuar?`,
-          'Atenção',
-          {
-            confirmButtonText: 'OK',
-            cancelButtonText: 'Cancelar',
-            type: 'warning',
-          }
-        ).then(() => {
+      ElMessageBox.confirm(`Você deseja deletar o usuário: ${this.userName}. Continuar?`, 'Atenção', {
+        confirmButtonText: 'OK',
+        cancelButtonText: 'Cancelar',
+        type: 'warning',
+      })
+        .then(() => {
           ElMessage({
-              type: 'success',
-              message: 'Usuário excluído com sucesso!',
-            })
-        }).catch(() =>{
-        ElMessage({
+            type: 'success',
+            message: 'Usuário excluído com sucesso!',
+          })
+        })
+        .catch(() => {
+          ElMessage({
             type: 'info',
             message: 'Exclusão cancelada',
           })
-      })
-    }
-  }
+        })
+    },
+  },
 }
 </script>
