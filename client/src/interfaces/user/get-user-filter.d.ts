@@ -1,20 +1,5 @@
+import { OrderFilters, OrderSort } from '../../constants'
 import { User } from './user'
-
-export enum OrderFilters {
-  ORDER = 'order',
-  BLOCKED = 'blocked',
-  DOCUMENT = 'document',
-  DOCUMENT_TYPE = 'documentType',
-  NAME = 'name',
-  CREATE_AT = 'createAt',
-  UPDATE_AT = 'updateAt',
-}
-
-export enum OrderSort {
-  ASC = 1,
-  DESC = -1,
-}
-
 export interface UserFilterParams {
   isBlocked?: boolean
   limit?: number

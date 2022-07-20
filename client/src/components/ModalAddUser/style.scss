@@ -1,3 +1,11 @@
 .error-field {
   @apply text-red-500;
 }
+
+.error-list-wrapper {
+  @apply border-t-2 pt-4;
+
+  .error-list {
+    @apply mt-2;
+  }
+}
