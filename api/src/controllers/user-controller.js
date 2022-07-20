@@ -11,6 +11,11 @@ class UserController {
     }
 
     const users = await req.mongo.findWithPagination(parameters, mongoConfig.COLLECTION)
+    users.items = users.items.map((user) => {
+      user._id = user._id.toString()
+      return user
+    })
+
     return res.status(200).send(users)
   }
 
@@ -30,7 +35,7 @@ class UserController {
     }
 
     const insertedUser = await req.mongo.insertOne(newUser, mongoConfig.COLLECTION)
-    return res.status(201).send({ _id: insertedUser })
+    return res.status(201).send({ _id: insertedUser.toString() })
   }
 
   static async delete (req, res) {
@@ -59,7 +64,7 @@ class UserController {
 
     const { _id } = await req.mongo.updateOne({ _id: new ObjectId(parameters.userId) }, userChanges, mongoConfig.COLLECTION)
 
-    res.status(200).send({ _id })
+    res.status(200).send({ _id: _id.toString() })
   }
 }
 

@@ -7,7 +7,7 @@ const { ValidationError, NotFoundError } = require('../../../../src/exceptions')
 const { DeleteUserParameters } = require('../../../../src/parameters')
 const getFakeResAndReq = require('../../../util/user-fake-request')
 
-describe('Unit tests for UserController.get', function () {
+describe('Unit tests for UserController.delete', function () {
   let req = {}
   let res = {}
   let fakeParameters = {}

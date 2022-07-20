@@ -25,7 +25,7 @@ describe('Unit tests for UserController.update', function () {
     }
 
     sandbox.stub(UpdateUserParameters, 'processParameters').returns(fakeParameters)
-    sandbox.stub(req.mongo, 'updateOne').returns(new ObjectId())
+    sandbox.stub(req.mongo, 'updateOne').returns({ _id: new ObjectId() })
 
     sandbox.spy(res)
   })

@@ -2,6 +2,7 @@ const assert = require('assert').strict
 const sandbox = require('sinon').createSandbox()
 
 const { cpf } = require('cpf-cnpj-validator')
+const { ObjectId } = require('mongodb')
 const validationErrorsConstants = require('../../../../src/constants/validation-errors-constants')
 const { UserController } = require('../../../../src/controllers')
 const { ValidationError, ServiceUnavailableError } = require('../../../../src/exceptions')
@@ -22,15 +23,19 @@ describe('Unit tests for UserController.get', function () {
       errors: []
     }
 
-    const fakeUsersReturn = [
-      {
-        blocked: false,
-        document: cpf.generate(),
-        documentType: 'CPF',
-        name: 'Foo',
-        order: 1
-      }
-    ]
+    const fakeUsersReturn = {
+      items: [
+        {
+          _id: new ObjectId(),
+          blocked: false,
+          document: cpf.generate(),
+          documentType: 'CPF',
+          name: 'Foo',
+          order: 1
+        }
+      ],
+      totalCount: 1
+    }
 
     sandbox.stub(GetUserParameters, 'processParameters').returns(fakeParameters)
     sandbox.stub(req.mongo, 'findWithPagination').returns(fakeUsersReturn)

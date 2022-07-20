@@ -32,7 +32,7 @@ describe('Integration test for UserController E2E', function () {
       const userSelected = await _findOne(connection, { name: options.params.userName })
 
       assert.notEqual(response.data.items, null)
-      assert.equal(response.data.items[0]._id.toString(), userSelected._id.toString())
+      assert.equal(response.data.items[0]._id, userSelected._id.toString())
     })
   })
 
@@ -56,9 +56,9 @@ describe('Integration test for UserController E2E', function () {
       const insertedUser = await _findOne(connection, { document: options.data.document })
 
       assert.notEqual(response.data, null)
-      assert.equal(response.data._id.toString(), insertedUser._id.toString())
+      assert.equal(response.data._id, insertedUser._id.toString())
 
-      await _deleteOne(connection, response.data._id.toString())
+      await _deleteOne(connection, response.data._id)
     })
   })
 
@@ -113,7 +113,7 @@ describe('Integration test for UserController E2E', function () {
 
       const userChanged = await _findOne(connection, { _id: userToChange._id })
 
-      assert.equal(response.data._id.toString(), userChanged._id.toString())
+      assert.equal(response.data._id, userChanged._id.toString())
       assert.notEqual(userToChange.blocked, userChanged.blocked)
     })
   })

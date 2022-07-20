@@ -28,7 +28,7 @@ class UserService {
     return data
   }
 
-  static async deleteUser(userId: string): Promise<{ userDeleted: boolean }> {
+  static async deleteUser(userId: string): Promise<{ userDeleted: string }> {
     const options = {
       method: 'delete',
       url: `/users/:${userId}`,

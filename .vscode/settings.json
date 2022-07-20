@@ -1,0 +1,12 @@
+{
+  "eslint.workingDirectories": [
+    "./api",
+    "./client"
+  ],
+  "[vue]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+}

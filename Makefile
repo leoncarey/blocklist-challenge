@@ -9,7 +9,7 @@ test-api:
 	docker-compose up test-api
 	@rm -Rf ./api/coverage
 	$(eval ID=$(shell docker ps -a | grep neoway-fullstack-test-api | sed 's/.*neoway-fullstack-test-api//' | head -n 1))
-	docker cp neoway-fullstack-test$(ID):/app/coverage ./api
+	docker cp neoway-fullstack-test-api$(ID):/app/coverage ./api
 
 test-client:
 	@rm -Rf ./client/.nyc_output
