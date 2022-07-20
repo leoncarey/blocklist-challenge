@@ -1,17 +1,15 @@
 {
-  "plugins": [
-    "cypress"
-  ],
-  "env": {
-    "mocha": true,
-    "cypress/global": true
-  },
+  "root": true,
   "extends": [
     "eslint:recommended",
-    "standard",
-    "plugin:@typescript-eslint/recommended",
-    "mocha",
-    "plugin:mocha/recommended"
+    "plugin:vue/base",
+    "plugin:vue/essential",
+    "plugin:vue/vue3-strongly-recommended",
+    "plugin:vue/recommended",
+    "plugin:vue/vue3-recommended",
+    "plugin:vue/vue3-essential",
+    "@vue/eslint-config-typescript",
+    "plugin:vue/strongly-recommended"
   ],
   "parserOptions": {
     "ecmaVersion": 2020
@@ -20,10 +18,18 @@
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-var-requires": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
-    "mocha/no-skipped-tests": "off",
-    "mocha/no-setup-in-describe": "off",
-    "strict": "off"
+    "vue/max-attributes-per-line": "off",
+    "strict": "off",
+    "vue/comment-directive": [
+      "error",
+      {
+        "reportUnusedDisableDirectives": false
+      }
+    ]
   },
+  "ignorePatterns": [
+    "src/**/*.spec.ts"
+  ],
   "overrides": [
     {
       "files": [
@@ -34,6 +40,5 @@
         "prefer-arrow-callback": "off"
       }
     }
-  ],
-  "noInlineConfig": true
+  ]
 }

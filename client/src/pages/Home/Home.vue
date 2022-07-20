@@ -9,7 +9,7 @@
 
 <script lang="ts">
 import Header from '../../components/Header/Header.vue';
-import ListUserScreen from '../../screens/ListScreen/ListUserScreen.vue';
+import ListUserScreen from '../../screens/ListScreen/ListScreen.vue';
 
 export default {
   components: {
@@ -18,4 +18,3 @@ export default {
   }
 }
 </script>
-

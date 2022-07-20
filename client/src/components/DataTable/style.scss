@@ -3,6 +3,10 @@
 
   .el-table__body col,
   .el-table__header col {
-    @apply min-w-[170px] #{!important};;
+    @apply min-w-[170px] #{!important};
+  }
+
+  .buttons-action-group {
+    @apply flex justify-between;
   }
 }

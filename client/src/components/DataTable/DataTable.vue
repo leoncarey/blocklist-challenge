@@ -9,10 +9,11 @@
       <el-table-column label="Ações" fixed="right" width="180">
         <template #default>
           <div class="buttons-action-group">
-            <el-button size="small" type="warning" plain @click="handleEdit(scope.$index, scope.row)">Bloquerar
+            <el-button size="small" type="warning" plain @click="handleEdit(scope.$index, scope.row)">
+              Bloquerar
             </el-button>
-            <el-button size="small" type="danger" plain @click="handleDelete(scope.$index, scope.row)">Excluir
-            </el-button>
+
+            <ModalConfirmDelete user-id="lalal" user-name="Lulu" />
           </div>
         </template>
       </el-table-column>
@@ -21,12 +22,10 @@
 </template>
 
 <script lang="ts">
-import { ArrowUpBold, ArrowDownBold } from '@element-plus/icons-vue'
+import ModalConfirmDelete from '@/components/ModalConfirmDelete/ModalConfirmDelete.vue'
 
 export default {
-  components: {
-    ArrowUpBold,
-    ArrowDownBold
+  components: {    ModalConfirmDelete
   },
   setup() {
     const tableData = [

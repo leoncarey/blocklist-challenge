@@ -5,9 +5,12 @@
     "module": "ESNext",
     "moduleResolution": "Node",
     "strict": true,
-    "types": ["vite/client"],
+    "types": [
+      "vite/client"
+    ],
     "jsx": "preserve",
     "sourceMap": true,
+    "noImplicitThis": false,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "esModuleInterop": true,
@@ -23,8 +26,23 @@
     "src/**/*.d.ts",
     "src/**/*.tsx",
     "src/**/*.vue",
-    "auto-imports.d.ts",
-    "components.d.ts"
+    "types/**/*.d.ts"
+  ],
+  "paths": [
+    {
+      "@/components/*": [
+        "./src/components/*"
+      ],
+      "@/pages/*": [
+        "./src/pages/*"
+      ],
+      "@/screens/*": [
+        "./src/screens/*"
+      ],
+      "@/services/*": [
+        "./src/services/*"
+      ]
+    }
   ],
   "references": [
     {

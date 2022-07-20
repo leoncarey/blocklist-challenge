@@ -4,7 +4,7 @@ import vue from '@vitejs/plugin-vue'
 import tsconfigPaths from 'vite-tsconfig-paths'
 import { resolve } from 'path'
 
-const pathResolve = (dir: string): string => resolve(__dirname, dir)
+const pathResolve = (dir: string):string => resolve(__dirname, dir)
 
 export default defineConfig({
   plugins: [vue(), tsconfigPaths()],
