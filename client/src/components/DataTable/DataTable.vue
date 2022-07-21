@@ -1,19 +1,28 @@
 <template>
   <div class="data-table">
-    <header>
-      <el-select
-        @change="reloadTable"
-        v-model="configTable.pageLimit"
-        class="m-2"
-        placeholder="Limite por página"
-        size="small"
-      >
-        <el-option v-for="item in pageLimitOptions" :key="item" :label="item" :value="item" />
-      </el-select>
+    <header class="header-table">
+      <div class="filter-left">
+        <span class="title-filter">por página:</span>
+
+        <el-select
+          @change="reloadTable"
+          v-model="configTable.pageLimit"
+          class="m-2 w-14"
+          placeholder="Limite por página"
+          size="small"
+        >
+          <el-option v-for="item in pageLimitOptions" :key="item" :label="item" :value="item" />
+        </el-select>
+      </div>
+
+      <div class="filter-right">
+        <SearchInput />
+        <ModalAddUser />
+      </div>
     </header>
 
     <el-table
-      v-loading="loading"
+      v-loading="loader"
       class="data-table-element"
       table-layout="auto"
       :data="tableData"
@@ -65,15 +74,25 @@
       <el-table-column label="Ações" width="240" align="center">
         <template #default="scope">
           <div class="buttons-action-group">
-            <BlockUser :user-id="scope.row._id" :blocked="scope.row.blocked" />
+            <BlockUser
+              :user-id="scope.row._id"
+              :blocked="scope.row.blocked"
+              v-model:loader="loader"
+              :reloadTable="reloadTable"
+            />
 
-            <ModalDeleteUser :user-id="scope.row._id" :user-name="scope.row.name" />
+            <ModalDeleteUser
+              :user-id="scope.row._id"
+              :user-name="scope.row.name"
+              v-model:loader="loader"
+              :reloadTable="reloadTable"
+            />
           </div>
         </template>
       </el-table-column>
     </el-table>
 
-    <footer>
+    <footer class="footer-table">
       <el-pagination background layout="prev, pager, next" :total="1000" />
     </footer>
   </div>
@@ -81,9 +100,11 @@
 
 <script lang="ts">
 import { ref } from 'vue'
-import { Lock, Unlock } from '@element-plus/icons-vue'
+import { Lock, Unlock, Search, Refresh } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
 
+import SearchInput from '../SearchInput/SearchInput.vue'
+import ModalAddUser from '../ModalAddUser/ModalAddUser.vue'
 import ModalDeleteUser from '../ModalDeleteUser/ModalDeleteUser.vue'
 import BlockUser from '../BlockUser/BlockUser.vue'
 import type { User } from '../../interfaces/user/user'
@@ -91,10 +112,17 @@ import { UserService } from '../../services'
 import { UserFilterParams, UserFilterResponse } from '../../interfaces/user/get-user-filter'
 import { OrderSort } from '../../constants'
 
-const loading = ref(true)
+const loader = ref(true)
 
 export default {
-  components: { ModalDeleteUser, BlockUser, Lock, Unlock },
+  components: {
+    SearchInput,
+    ModalAddUser,
+    ModalDeleteUser,
+    BlockUser,
+    Lock,
+    Unlock,
+  },
   data() {
     return {
       iconSize: '24px',
@@ -109,7 +137,7 @@ export default {
         isBlocked: null,
         offset: 0,
       },
-      loading,
+      loader,
     }
   },
   methods: {
@@ -118,7 +146,7 @@ export default {
       await this.reloadTable()
     },
     async reloadTable() {
-      this.loading = true
+      this.loader = true
 
       const filters: UserFilterParams = {
         isBlocked: this.configTable.isBlocked,
@@ -134,7 +162,7 @@ export default {
 
         const self = this
         setTimeout(() => {
-          self.loading = false
+          self.loader = false
         }, 1000)
       } catch (error: any) {
         ElMessage({

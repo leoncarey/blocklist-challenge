@@ -9,6 +9,7 @@ import { ElMessage, ElMessageBox } from 'element-plus'
 import { UserService } from '../../services'
 
 export default {
+  emits: ['update:loader'],
   props: {
     userName: {
       type: String,
@@ -19,6 +20,9 @@ export default {
       type: String,
       default: '',
       require: true,
+    },
+    reloadTable: {
+      type: Function,
     },
   },
   methods: {
@@ -39,6 +43,8 @@ export default {
       }
     },
     async deleteUser() {
+      this.$emit('update:loader', true)
+
       try {
         await UserService.deleteUser(this.userId)
 
@@ -46,6 +52,8 @@ export default {
           type: 'success',
           message: 'Usuário excluído com sucesso!',
         })
+
+        this.reloadTable()
       } catch (error: any) {
         const errorResponseMessage = error.response.data
 

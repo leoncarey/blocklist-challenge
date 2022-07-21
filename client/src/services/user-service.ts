@@ -31,7 +31,7 @@ class UserService {
   static async deleteUser(userId: string): Promise<{ userDeleted: string }> {
     const options = {
       method: 'delete',
-      url: `/users/:${userId}`,
+      url: `/users/${userId}`,
     }
 
     const { data } = await api(options)
@@ -44,7 +44,7 @@ class UserService {
       data: {
         blocked: blockSituation,
       },
-      url: `/users/:${userId}`,
+      url: `/users/${userId}`,
     }
 
     const { data } = await api(options)

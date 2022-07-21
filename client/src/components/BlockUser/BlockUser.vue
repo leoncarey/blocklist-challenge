@@ -5,7 +5,7 @@
     :icon="blocked ? Unlock : Lock"
     style="width: 110px"
     plain
-    @click="handleEdit(scope.$index, scope.row)"
+    @click="handleEdit"
   >
     {{ blocked ? 'Desbloquear' : 'Bloquear' }}
   </el-button>
@@ -17,6 +17,7 @@ import { UserService } from '../../services'
 import { ElMessage } from 'element-plus'
 
 export default {
+  emits: ['update:loader'],
   props: {
     blocked: {
       type: Boolean,
@@ -28,9 +29,14 @@ export default {
       default: '',
       require: true,
     },
+    reloadTable: {
+      type: Function,
+    },
   },
   methods: {
     async handleEdit() {
+      this.$emit('update:loader', true)
+
       try {
         /*
          * this.blocked is current state
@@ -45,6 +51,8 @@ export default {
           type: 'success',
           message: `Usuário ${currentStateUser} com sucesso!`,
         })
+
+        this.reloadTable()
       } catch (error: any) {
         const errorResponseMessage = error.response.data
 

@@ -1,13 +1,29 @@
 .data-table {
   @apply align-middle inline-block w-full shadow overflow-hidden sm:rounded-lg border-b border-gray-200 mb-20 mt-6;
 
-  header,
-  footer {
+  .header-table,
+  .footer-table {
     @apply bg-[#edf2f7]
   }
 
-  footer {
-    @apply pb-3 pt-2 justify-center flex;
+  .header-table {
+    @apply flex justify-between items-center;
+
+    .filter-left {
+      @apply flex items-center;
+    }
+
+    .filter-right {
+      @apply flex items-center mr-3;
+    }
+
+    .title-filter {
+      @apply ml-3 mr-0 text-xs text-gray-500 block font-bold;
+    }
+  }
+
+  .footer-table {
+    @apply pb-3 pt-2 justify-end flex;
   }
 
   .buttons-action-group {
