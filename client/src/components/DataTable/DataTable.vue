@@ -8,7 +8,7 @@
       />
 
       <div class="filter-right">
-        <SearchInput />
+        <SearchInput :reloadTable="reloadTable" v-model:document="configTable.document" />
 
         <ModalAddUser v-model:loader="loader" :reloadTable="reloadTable" />
       </div>
@@ -139,9 +139,13 @@ export default {
         },
         isBlocked: null,
         offset: 0,
+        document: '',
       },
       loader,
     }
+  },
+  mounted() {
+    this.reloadTable()
   },
   methods: {
     async handleSortTable({ prop, order }: any) {
@@ -159,8 +163,14 @@ export default {
         order: OrderSort[this.configTable.sortTable.order as keyof typeof OrderSort],
       }
 
+      const search = {
+        document: null,
+      }
+
+      if (this.configTable.document !== '') search.document = this.configTable.document.replace(/\D/gu, '')
+
       try {
-        const data: UserFilterResponse = await UserService.getUsers(filters, {})
+        const data: UserFilterResponse = await UserService.getUsers(filters, search)
         this.totalItems = data.totalCount
         this.tableData = data.items
 
@@ -173,6 +183,7 @@ export default {
           type: 'error',
           message: 'Houve um problema ao tentar carregar a lista de usuários',
         })
+        this.loader = false
       }
     },
     documentTypeFilter: (user: User) => {
@@ -186,9 +197,6 @@ export default {
       this.configTable.offset = currentPage - 1
       this.reloadTable()
     },
-  },
-  mounted() {
-    this.reloadTable()
   },
 }
 </script>

@@ -10,8 +10,8 @@ export interface UserFilterParams {
 }
 
 export interface UserSearchParams {
-  userName?: string
-  document?: string
+  userName?: string | null
+  document?: string | null
 }
 
 export interface UserFilterResponse {
