@@ -14,9 +14,10 @@ export default defineConfig({
   },
   test: {
     include: ['./test/**/*.{test,spec}.ts'],
-    exclude: [...configDefaults.exclude],
+    exclude: [...configDefaults.exclude, './src/main.ts', './src/**/*.d.ts',],
     environment: 'happy-dom',
     watch: false,
+    globals: true,
   },
   server: {
     host: true,

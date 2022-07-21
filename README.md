@@ -34,6 +34,7 @@ Antes de passar algumas instruções para rodar o projeto e seus testes,
 se certifique de que tenha as seguintes tecnologias instaladas na sua máquina:
 
 - <img align="center" alt="Docker" height="20" width="30" src="https://github.com/leoncarey/devicon/blob/master/icons/docker/docker-plain.svg" /> Docker(^20.10.17)
+- Se certifique que o formatador e validador de código da sua IDE seja o eslint
 
 
 ### Como rodar
@@ -69,7 +70,7 @@ $ make clean
 ```
 
 #### Testes backend
-Para rodar os testes tanto de integração, quando unitários use o comando:
+Para rodar os testes use o comando:
 
 ```
 $ make test-api
@@ -90,13 +91,6 @@ Na sequência levantará o ambiente do frontend.<br>
 A API estará disponível para a aplicação Vue consumi-la na porta `5173`.
 
 - <a href="http://localhost:5173" target="_blank">http://localhost:5173</a>
-
-#### Testes frontend
-Para rodar os testes tanto de integração, quando unitários use o comando:
-
-```
-$ make test-client
-```
 
 ---
 #### Conclusão
