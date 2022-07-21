@@ -35,7 +35,7 @@ $ make run-api
 ```
 
 Esse comando irá levantar o ambiente do backend.<br>
-<img align="center" alt="Express" height="20" width="30" src="https://github.com/leoncarey/devicon/tree/master/icons/express" />Express e o <img align="center" alt="MongoDb" height="20" width="30" src="https://github.com/leoncarey/devicon/blob/master/icons/mongodb/mongodb-original.svg" />MongoDb estarão de pé para serem acessados:
+Express e o MongoDb estarão de pé para serem acessados:
 - Aplicação via browser na porta: `11000`
   - [http://localhost:11000](http://localhost:11000)
 - Mongo na porta: `27017`
@@ -76,6 +76,6 @@ $ make run-client
 
 Esse comando irá levantar primeiro o ambiente do backend.<br>
 Na sequência levantará o ambiente do frontend.<br>
-A API estará disponível para a aplicação <img align="center" alt="Vue 3" height="20" width="30" src="https://github.com/leoncarey/devicon/blob/master/icons/vuejs/vuejs-original.svg" />Vue consumi-la na porta `5173`.
+A API estará disponível para a aplicação Vue consumi-la na porta `5173`.
 
-- [http://localhost:5173](http://localhost:5173){:target="_blank"}
+- [http://localhost:5173](http://localhost:5173)
