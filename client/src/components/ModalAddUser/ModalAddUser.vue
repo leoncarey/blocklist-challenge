@@ -55,6 +55,15 @@ import { ValidationErrors } from '../../constants'
 import { maska } from 'maska'
 
 export default {
+  emits: ['update:loader'],
+  props: {
+    loader: {
+      type: Boolean,
+    },
+    reloadTable: {
+      type: Function,
+    },
+  },
   data() {
     return {
       errorServerListMessage: [],
@@ -98,11 +107,14 @@ export default {
       // If valid...
       await formEl.validate(async (valid, fields) => {
         if (valid) {
+          this.$emit('update:loader', true)
+
           try {
             this.errorServerListMessage = []
             await this.saveUser()
-            this.emitSuccessMessage()
             this.closeModal(formEl)
+            this.emitSuccessMessage()
+            this.reloadTable()
           } catch (error: any) {
             this.prepareErrorMessagesFromServer(error.response.data)
             this.emitErrorMessage()

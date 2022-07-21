@@ -1,23 +1,16 @@
 <template>
   <div class="data-table">
     <header class="header-table">
-      <div class="filter-left">
-        <span class="title-filter">por página:</span>
-
-        <el-select
-          @change="reloadTable"
-          v-model="configTable.pageLimit"
-          class="m-2 w-14"
-          placeholder="Limite por página"
-          size="small"
-        >
-          <el-option v-for="item in pageLimitOptions" :key="item" :label="item" :value="item" />
-        </el-select>
-      </div>
+      <SelectLimitPage
+        v-model:pageLimit="configTable.pageLimit"
+        :pageLimitOptions="pageLimitOptions"
+        :reloadTable="reloadTable"
+      />
 
       <div class="filter-right">
         <SearchInput />
-        <ModalAddUser />
+
+        <ModalAddUser v-model:loader="loader" :reloadTable="reloadTable" />
       </div>
     </header>
 
@@ -93,16 +86,24 @@
     </el-table>
 
     <footer class="footer-table">
-      <el-pagination background layout="prev, pager, next" :total="1000" />
+      <el-pagination
+        background
+        layout="pager"
+        :page-size="configTable.pageLimit"
+        :total="totalItems"
+        v-model:offset="configTable.offset"
+        @current-change="updatePagination"
+      />
     </footer>
   </div>
 </template>
 
 <script lang="ts">
 import { ref } from 'vue'
-import { Lock, Unlock, Search, Refresh } from '@element-plus/icons-vue'
+import { Lock, Unlock } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
 
+import SelectLimitPage from '../SelectLimitPage/SelectLimitPage.vue'
 import SearchInput from '../SearchInput/SearchInput.vue'
 import ModalAddUser from '../ModalAddUser/ModalAddUser.vue'
 import ModalDeleteUser from '../ModalDeleteUser/ModalDeleteUser.vue'
@@ -119,6 +120,7 @@ export default {
     SearchInput,
     ModalAddUser,
     ModalDeleteUser,
+    SelectLimitPage,
     BlockUser,
     Lock,
     Unlock,
@@ -128,6 +130,7 @@ export default {
       iconSize: '24px',
       pageLimitOptions: [1, 3, 5],
       tableData: [],
+      totalItems: 0,
       configTable: {
         pageLimit: 5,
         sortTable: {
@@ -158,6 +161,7 @@ export default {
 
       try {
         const data: UserFilterResponse = await UserService.getUsers(filters, {})
+        this.totalItems = data.totalCount
         this.tableData = data.items
 
         const self = this
@@ -177,6 +181,10 @@ export default {
       } else {
         return user.document.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4')
       }
+    },
+    updatePagination(currentPage: any) {
+      this.configTable.offset = currentPage - 1
+      this.reloadTable()
     },
   },
   mounted() {

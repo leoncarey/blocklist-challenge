@@ -9,10 +9,6 @@
   .header-table {
     @apply flex justify-between items-center;
 
-    .filter-left {
-      @apply flex items-center;
-    }
-
     .filter-right {
       @apply flex items-center mr-3;
     }
@@ -23,7 +19,7 @@
   }
 
   .footer-table {
-    @apply pb-3 pt-2 justify-end flex;
+    @apply pb-3 pt-2 pr-2 justify-end flex;
   }
 
   .buttons-action-group {

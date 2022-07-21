@@ -27,6 +27,8 @@ export default {
   },
   methods: {
     async handleDelete() {
+      this.$emit('update:loader', true)
+
       try {
         await ElMessageBox.confirm(`Você deseja deletar o usuário: ${this.userName}. Continuar?`, 'Atenção', {
           confirmButtonText: 'OK',
@@ -43,8 +45,6 @@ export default {
       }
     },
     async deleteUser() {
-      this.$emit('update:loader', true)
-
       try {
         await UserService.deleteUser(this.userId)
 
