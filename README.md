@@ -2,7 +2,7 @@
 
 #### Arquitetura:
 
-📦 neoway-fullstack
+📦 blocklist-challenge
 ┣ 📂 api
 ┃ ┗ 📄 Dockerfile
 ┣ 📂 server

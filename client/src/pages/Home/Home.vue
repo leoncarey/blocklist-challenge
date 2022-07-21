@@ -3,7 +3,7 @@
     <div class="inner-content-wrapper">
       <header>
         <div class="inner-header">
-          <h1 class="title">Blockclist de CPF/CNPJ</h1>
+          <h1 class="title">Blockclist Challenge</h1>
         </div>
       </header>
 

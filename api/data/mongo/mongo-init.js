@@ -3,7 +3,7 @@ print('Start #################################################################')
 const userDb = {
   user: 'root',
   pwd: 'essavagaehminha',
-  roles: [{ role: 'readWrite', db: 'neoway-fullstack-db' }]
+  roles: [{ role: 'readWrite', db: 'blocklist-challenge-db' }]
 }
 
 const collectionData = [
@@ -45,7 +45,7 @@ const collectionData = [
   }
 ]
 
-database = db.getSiblingDB('neoway-fullstack-db')
+database = db.getSiblingDB('blocklist-challenge-db')
 database.createUser(userDb)
 database.createCollection('users')
 database.users.insertMany(collectionData)

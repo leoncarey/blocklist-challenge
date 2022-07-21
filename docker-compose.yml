@@ -4,9 +4,9 @@ services:
   mongo:
     image: mongo
     restart: always
-    container_name: neoway-fullstack-mongo
+    container_name: blocklist-challenge-mongo
     networks:
-      - neoway-fullstack-network
+      - blocklist-challenge-network
     ports:
       - 27017:27017
     volumes:
@@ -16,24 +16,24 @@ services:
     build:
       context: ./api
       target: service
-    container_name: neoway-fullstack-api
+    container_name: blocklist-challenge-api
     restart: always
     ports:
       - 11000:11000
     depends_on:
       - mongo
     networks:
-      - neoway-fullstack-network
+      - blocklist-challenge-network
     env_file:
       - docker-compose.env
 
   client:
     build:
       context: ./client
-    container_name: neoway-fullstack-client
+    container_name: blocklist-challenge-client
     restart: always
     networks:
-      - neoway-fullstack-network
+      - blocklist-challenge-network
     ports:
       - 8080:8080
     depends_on:
@@ -45,9 +45,9 @@ services:
     build:
       context: ./api
       target: test
-    container_name: neoway-fullstack-test-api
+    container_name: blocklist-challenge-test-api
     networks:
-      - neoway-fullstack-network
+      - blocklist-challenge-network
     depends_on:
       - api
     env_file:
@@ -57,15 +57,15 @@ services:
     build:
       context: ./client
       target: test
-    container_name: neoway-fullstack-test-client
+    container_name: blocklist-challenge-test-client
     networks:
-      - neoway-fullstack-network
+      - blocklist-challenge-network
     depends_on:
       - client
     env_file:
       - docker-compose.env
 
 networks:
-  neoway-fullstack-network:
-    name: neoway-fullstack-network
+  blocklist-challenge-network:
+    name: blocklist-challenge-network
     driver: bridge

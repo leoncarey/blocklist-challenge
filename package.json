@@ -1,5 +1,5 @@
 {
-  "name": "neoway-fullstack",
+  "name": "blocklist-challenge",
   "version": "1.0.0",
   "private": true,
   "description": "",
@@ -7,13 +7,13 @@
     "name": "Leonardo Carey"
   },
   "bugs": {
-    "url": "https://github.com/leoncarey/neoway-fullstack/issues"
+    "url": "https://github.com/leoncarey/blocklist-challenge/issues"
   },
-  "homepage": "https://github.com/leoncarey/neoway-fullstack#readme",
+  "homepage": "https://github.com/leoncarey/blocklist-challenge#readme",
   "license": "ISC",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/leoncarey/neoway-fullstack.git"
+    "url": "git+https://github.com/leoncarey/blocklist-challenge.git"
   },
   "devDependencies": {
     "@vue/cli": "^5.0.8"
