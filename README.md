@@ -6,14 +6,14 @@ Ainda é possível adicionar novos usuário sejam PF ou PJ e remove-los.
 
 
 ### Sumário:
-- [Arquitetura do projeto](/#arquitetura-do-projeto)
-- [Setup requerido para rodar](/setup-requerido-para-rodar)
-- [Como rodar](/como-rodar)
-- [Backend](/backend)
-  - [Testes](/testes-backend)
-- [Frontend](/frontend)
-  - [Testes](/testes-frontend)
-- [Conclusão](/conclusao)
+- [Arquitetura do projeto](https://github.com/leoncarey/blocklist-challenge#arquitetura-do-projeto)
+- [Setup requerido para rodar](https://github.com/leoncarey/blocklist-challenge#setup-requerido-para-rodar)
+- [Como rodar](https://github.com/leoncarey/blocklist-challenge#como-rodar)
+- [Backend](https://github.com/leoncarey/blocklist-challenge#backend)
+  - [Testes](https://github.com/leoncarey/blocklist-challenge#testes-backend)
+- [Frontend](https://github.com/leoncarey/blocklist-challenge#frontend)
+  - [Testes](https://github.com/leoncarey/blocklist-challenge#testes-frontend)
+- [Conclusão](https://github.com/leoncarey/blocklist-challenge#conclusao)
 
 ---
 
