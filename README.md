@@ -4,6 +4,17 @@ Seja bem vindo ao Blocklist Challenge!
 A aplicação web que serve para consultas de CPF/CNPJ, bloqueio e desbloqueio dos mesmos.
 Ainda é possível adicionar novos usuário sejam PF ou PJ e remove-los.
 
+
+### Sumário:
+- [Arquitetura do projeto](/#arquitetura-do-projeto)
+- [Setup requerido para rodar](/setup-requerido-para-rodar)
+- [Como rodar](/como-rodar)
+- [Backend](/backend)
+  - [Testes](/testes-backend)
+- [Frontend](/frontend)
+  - [Testes](/testes-frontend)
+- [Conclusão](/conclusao)
+
 ---
 
 ### Arquitetura do projeto
@@ -18,7 +29,7 @@ Ainda é possível adicionar novos usuário sejam PF ou PJ e remove-los.
 ┗ 📄 README.md
 
 
-### Setup
+### Setup requerido para rodar
 Antes de passar algumas instruções para rodar o projeto e seus testes,
 se certifique de que tenha as seguintes tecnologias instaladas na sua máquina:
 
@@ -57,7 +68,7 @@ Nesse caso, rode o seguinte comando para "matar" os containers ativos:
 $ make clean
 ```
 
-#### Testes
+#### Testes backend
 Para rodar os testes tanto de integração, quando unitários use o comando:
 
 ```
@@ -79,3 +90,16 @@ Na sequência levantará o ambiente do frontend.<br>
 A API estará disponível para a aplicação Vue consumi-la na porta `5173`.
 
 - <a href="http://localhost:5173" target="_blank">http://localhost:5173</a>
+
+#### Testes frontend
+Para rodar os testes tanto de integração, quando unitários use o comando:
+
+```
+$ make test-client
+```
+
+---
+#### Conclusão
+
+Espero que tenha aproveitado o tour nessa doc e que ela tenha sido útil.<br>
+Um forte abraço e até a próxima.
