@@ -32,6 +32,9 @@ export default {
     reloadTable: {
       type: Function,
     },
+    loader: {
+      type: Boolean,
+    },
   },
   methods: {
     async handleEdit() {
@@ -60,6 +63,8 @@ export default {
           type: 'error',
           message: `Houve um problema ao tentar excluir o usuário: [${errorResponseMessage}]`,
         })
+
+        this.$emit('update:loader', false)
       }
     },
   },

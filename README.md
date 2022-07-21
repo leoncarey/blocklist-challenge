@@ -50,9 +50,9 @@ Esse comando irá levantar o ambiente do backend.<br>
 Express e o MongoDb estarão de pé para serem acessados:
 - Aplicação via browser na porta: `11000`
   - <a href="http://localhost:11000" target="_blank">http://localhost:11000</a>
-- Mongo na porta: `27017`
+- Mongo:
   - host: `127.0.0.1`
-  - porta: 27017
+  - porta: `27017`
   - user: `<string vazia>`
   - senha: `<string vazia>`
 

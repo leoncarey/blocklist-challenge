@@ -24,6 +24,9 @@ export default {
     reloadTable: {
       type: Function,
     },
+    loader: {
+      type: Boolean,
+    },
   },
   methods: {
     async handleDelete() {
@@ -61,7 +64,7 @@ export default {
           dangerouslyUseHTMLString: true,
           type: 'error',
           message: `Houve um problema ao tentar excluir o usuário:<br>[${errorResponseMessage}]`,
-          duration: 5000
+          duration: 5000,
         })
       }
     },
