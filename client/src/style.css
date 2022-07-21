@@ -3,8 +3,7 @@
 @tailwind utilities;
 
 :root {
-  color: #213547;
-  background-color: #edf2f7;
+  @apply text-gray-700 bg-[#f5f7f8];
 }
 
 .content-wrapper {

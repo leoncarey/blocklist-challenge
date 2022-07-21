@@ -1,7 +1,7 @@
 <template>
   <el-button :icon="Avatar" @click="modalAddUser = true">Adicionar Novo</el-button>
 
-  <el-dialog class="modal-add-user" v-model="modalAddUser" title="Adicionar novo usuário">
+  <el-dialog v-model="modalAddUser" title="Adicionar novo usuário">
     <el-form
       ref="formRef"
       :rules="rules"
@@ -28,10 +28,10 @@
         <el-switch v-model="formAddUser.blocked" />
       </el-form-item>
 
-      <div class="error-list-wrapper" v-if="errorListMessage.length !== 0">
+      <div class="error-list-wrapper" v-if="errorServerListMessage.length !== 0">
         <span class="error-list-header">Erros que devem ser corrigidos:</span>
 
-        <div class="error-list" v-for="errorType in errorListMessage">
+        <div class="error-list" v-for="errorType in errorServerListMessage">
           <span class="error-field">- {{ errorType }}</span>
         </div>
       </div>
@@ -39,7 +39,7 @@
 
     <template #footer>
       <span class="dialog-footer">
-        <el-button @click="closeModal">Cancel</el-button>
+        <el-button @click="closeModal(formRef)">Cancel</el-button>
         <el-button type="primary" @click="onSubmit(formRef)">Confirm</el-button>
       </span>
     </template>
@@ -57,7 +57,7 @@ import { maska } from 'maska'
 export default {
   data() {
     return {
-      errorListMessage: [],
+      errorServerListMessage: [],
     }
   },
   directives: {
@@ -69,6 +69,7 @@ export default {
     const formRef = ref<FormInstance>()
     const formSize = ref('default')
 
+    // Form config validation client side
     const formAddUser = reactive({
       userName: '',
       document: '',
@@ -94,14 +95,14 @@ export default {
     async onSubmit(formEl: FormInstance | undefined) {
       if (!formEl) return
 
+      // If valid...
       await formEl.validate(async (valid, fields) => {
         if (valid) {
           try {
-            this.errorListMessage
+            this.errorServerListMessage = []
             await this.saveUser()
             this.emitSuccessMessage()
-            this.resetForm(formEl)
-            this.closeModal()
+            this.closeModal(formEl)
           } catch (error: any) {
             this.prepareErrorMessagesFromServer(error.response.data)
             this.emitErrorMessage()
@@ -120,7 +121,7 @@ export default {
     },
     prepareErrorMessagesFromServer(errorResponse: any) {
       if (errorResponse.errorCode && errorResponse.errorCode === 'VALIDATION_ERROR') {
-        this.errorListMessage = errorResponse.errorDetail.map(
+        this.errorServerListMessage = errorResponse.errorDetail.map(
           (errorType: string) => ValidationErrors[errorType as keyof typeof ValidationErrors]
         )
       }
@@ -137,7 +138,8 @@ export default {
         message: `Houve um problema ao tentar excluir o usuário`,
       })
     },
-    closeModal() {
+    closeModal(formEl: FormInstance | undefined) {
+      this.resetForm(formEl)
       this.modalAddUser = false
     },
     resetForm(formEl: FormInstance | undefined) {

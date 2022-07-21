@@ -1,6 +1,6 @@
 <template>
   <div class="modal-delete-user">
-    <el-button size="small" type="danger" plain @click="open">Excluir</el-button>
+    <el-button size="small" type="danger" plain @click="handleDelete">Excluir</el-button>
   </div>
 </template>
 
@@ -22,36 +22,38 @@ export default {
     },
   },
   methods: {
-    open() {
-      ElMessageBox.confirm(`Você deseja deletar o usuário: ${this.userName}. Continuar?`, 'Atenção', {
-        confirmButtonText: 'OK',
-        cancelButtonText: 'Cancelar',
-        type: 'warning',
-      })
-        .then(() => {
-          this.deleteUser()
+    async handleDelete() {
+      try {
+        await ElMessageBox.confirm(`Você deseja deletar o usuário: ${this.userName}. Continuar?`, 'Atenção', {
+          confirmButtonText: 'OK',
+          cancelButtonText: 'Cancelar',
+          type: 'warning',
         })
-        .catch(() => {
-          ElMessage({
-            type: 'info',
-            message: 'Exclusão cancelada',
-          })
+
+        await this.deleteUser()
+      } catch (error) {
+        ElMessage({
+          type: 'info',
+          message: 'Exclusão cancelada',
         })
+      }
     },
-    deleteUser() {
-      UserService.deleteUser(this.userId)
-        .then(() => {
-          ElMessage({
-            type: 'success',
-            message: 'Usuário excluído com sucesso!',
-          })
+    async deleteUser() {
+      try {
+        await UserService.deleteUser(this.userId)
+
+        ElMessage({
+          type: 'success',
+          message: 'Usuário excluído com sucesso!',
         })
-        .catch((error) => {
-          ElMessage({
-            type: 'error',
-            message: `Houve um problema ao tentar excluir o usuário: [${error.message}]`,
-          })
+      } catch (error: any) {
+        const errorResponseMessage = error.response.data
+
+        ElMessage({
+          type: 'error',
+          message: `Houve um problema ao tentar excluir o usuário: [${errorResponseMessage}]`,
         })
+      }
     },
   },
 }

@@ -1,12 +1,36 @@
 .data-table {
-  @apply align-middle inline-block w-full shadow overflow-hidden sm:rounded-lg border-b border-gray-200 mb-20;
+  @apply align-middle inline-block w-full shadow overflow-hidden sm:rounded-lg border-b border-gray-200 mb-20 mt-6;
 
-  .el-table__body col,
-  .el-table__header col {
-    @apply min-w-[170px] #{!important};
+  header,
+  footer {
+    @apply bg-[#edf2f7]
+  }
+
+  footer {
+    @apply pb-3 pt-2 justify-center flex;
   }
 
   .buttons-action-group {
-    @apply flex justify-between;
+    @apply flex justify-center;
+
+    button:first-child {
+      @apply ml-2;
+    }
+  }
+
+  .block-label {
+    @apply font-bold block text-xs text-center;
+  }
+
+  .is-block {
+    @apply text-red-700;
+  }
+
+  .is-unblock {
+    @apply text-green-700;
+  }
+
+  .icon-block {
+    @apply block text-center;
   }
 }

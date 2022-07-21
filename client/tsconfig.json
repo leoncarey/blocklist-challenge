@@ -20,7 +20,6 @@
     {
       "@/components/*": ["./src/components/*"],
       "@/pages/*": ["./src/pages/*"],
-      "@/screens/*": ["./src/screens/*"],
       "@/services/*": ["./src/services/*"],
     }
   ],

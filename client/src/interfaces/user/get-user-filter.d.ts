@@ -7,7 +7,6 @@ export interface UserFilterParams {
   order?: OrderSort
   offset?: number
   limit?: number
-  isBlocked?: boolean
 }
 
 export interface UserSearchParams {
