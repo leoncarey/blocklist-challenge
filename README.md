@@ -37,18 +37,18 @@ $ make run-api
 Esse comando irá levantar o ambiente do backend.<br>
 Express e o MongoDb estarão de pé para serem acessados:
 - Aplicação via browser na porta: `11000`
-  - [http://localhost:11000](http://localhost:11000)
+  - <a href="http://localhost:11000" target="_blank">http://localhost:11000</a>
 - Mongo na porta: `27017`
   - host: `127.0.0.1`
   - porta: 27017
   - user: `<string vazia>`
   - senha: `<string vazia>`
 
-Após rodar o backend, é possível acessar todos os endpoints disponíveis acessando:
-- [http://localhost:11000/docs](http://localhost:11000/docs)
+Após rodar o backend, é possível acessar todas as rotas disponíveis pela aplicação:
+- <a href="http://localhost:11000/docs" target="_blank">http://localhost:11000/docs</a>
 
-O único endpoint que não está disponível através da documentação do swagger é o endpoint de suporte com as metricas do Prometheus:
-- [http://localhost:11000/status](http://localhost:11000/status)
+O único endpoint que não está disponível através da documentação do Swagger é o endpoint de suporte com as metricas do Prometheus:
+- <a href="http://localhost:11000/status" target="_blank">http://localhost:11000/status</a>
 
 Ao "derrubar" a aplicação no terminal, pode ser que o container esteja ainda de pé e a aplicação continue ativa.<br>
 Nesse caso, rode o seguinte comando para "matar" os containers ativos:
@@ -78,4 +78,4 @@ Esse comando irá levantar primeiro o ambiente do backend.<br>
 Na sequência levantará o ambiente do frontend.<br>
 A API estará disponível para a aplicação Vue consumi-la na porta `5173`.
 
-- [http://localhost:5173](http://localhost:5173)
+- <a href="http://localhost:5173" target="_blank">http://localhost:5173</a>
