@@ -30,3 +30,11 @@
 .el-message-box {
   @apply w-[90%] sm:w-[420px];
 }
+
+.el-popper.is-customized {
+  @apply py-[6px] px-[12px] bg-yellow-500 text-white;
+}
+
+.el-popper.is-customized .el-popper__arrow::before {
+  @apply bg-yellow-500;
+}

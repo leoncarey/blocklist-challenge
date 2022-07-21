@@ -23,9 +23,9 @@
       :default-sort="configTable.sortTable"
       @sort-change="handleSortTable"
     >
-      <el-table-column class="column-table" sortable prop="name" label="Nome" align="center" />
+      <el-table-column class-name="w-[300px]" sortable prop="name" label="Nome" align="center" />
       <el-table-column
-        class="column-table"
+        class-name="w-[340px]"
         sortable
         prop="document"
         label="Documento"
@@ -34,14 +34,14 @@
       />
 
       <el-table-column
-        class="column-table"
+        class-name="w-[260px]"
         sortable
         prop="documentType"
-        label="Tipo Documento"
+        label="Tipo Doc."
         align="center"
         width="180"
       />
-      <el-table-column class="column-table" sortable prop="blocked" label="Bloqueio" align="center" width="180">
+      <el-table-column sortable prop="blocked" label="Bloqueio" align="center" width="180">
         <template #default="scope">
           <div v-if="!scope.row.blocked">
             <div class="icon-block">
@@ -87,6 +87,22 @@
     </el-table>
 
     <footer class="footer-table">
+      <div class="footer-info">
+        <div>
+          <el-icon class="icon-wrapper" size="large">
+            <Switch />
+          </el-icon>
+          <span>Segure a tecla SHIF do seu teclado e use o scroll do mouse para rolar na horizontal.</span>
+        </div>
+
+        <div>
+          <el-icon class="icon-wrapper" size="large">
+            <Pointer />
+          </el-icon>
+          <span>Se estiver no celular ou tablet, pode deslizar para os lados.</span>
+        </div>
+      </div>
+
       <el-pagination
         background
         layout="pager"
@@ -101,7 +117,7 @@
 
 <script lang="ts">
 import { ref } from 'vue'
-import { Lock, Unlock } from '@element-plus/icons-vue'
+import { Lock, Unlock, Pointer, Switch } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
 
 import SelectLimitPage from '../SelectLimitPage/SelectLimitPage.vue'
@@ -125,6 +141,8 @@ export default {
     BlockUser,
     Lock,
     Unlock,
+    Pointer,
+    Switch,
   },
   data() {
     return {
@@ -182,15 +200,19 @@ export default {
       } catch (error: any) {
         const message = this.createErrorMessage(error.response.data)
         ElMessage({
+          dangerouslyUseHTMLString: true,
           type: 'error',
           message: message,
+          duration: 5000,
         })
+
         this.loader = false
       }
     },
     createErrorMessage(errorResponse: any) {
       if (errorResponse.errorCode && errorResponse.errorCode === 'VALIDATION_ERROR') {
-        return 'O documento informado está incorreto. Tente preenchelo por completo.'
+        return `O documento informado está incorreto.<br>
+        Verifique os digitos informados e tente novamente.`
       }
 
       return 'Houve um problema ao tentar carregar a lista de usuários'

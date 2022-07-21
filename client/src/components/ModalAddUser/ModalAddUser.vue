@@ -8,7 +8,7 @@
       :formSize="formSize"
       :model="formAddUser"
       label-width="200px"
-      :label-position="labelPosition"
+      label-position="top"
       status-icon
     >
       <el-form-item label="Nome do usuário" prop="userName">
@@ -74,7 +74,6 @@ export default {
   },
   setup() {
     const modalAddUser = ref(false)
-    const labelPosition = ref('right')
     const formRef = ref<FormInstance>()
     const formSize = ref('default')
 
@@ -97,7 +96,6 @@ export default {
       rules,
       formRef,
       formSize,
-      labelPosition,
     }
   },
   methods: {
@@ -148,6 +146,7 @@ export default {
       ElMessage({
         type: 'error',
         message: `Houve um problema ao tentar excluir o usuário`,
+        duration: 5000,
       })
     },
     closeModal(formEl: FormInstance | undefined) {
@@ -162,6 +161,6 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 @import './style.scss';
 </style>

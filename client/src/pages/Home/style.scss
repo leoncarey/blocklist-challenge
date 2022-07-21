@@ -2,7 +2,7 @@
   @apply pt-4 pb-4 border-b block lg:flex lg:justify-between lg:items-center;
 
   .title {
-    @apply text-2xl font-bold text-center lg:text-left mb-2 lg:mb-0;
+    @apply text-2xl font-bold text-center md:text-left;
   }
 
   .fields-header {

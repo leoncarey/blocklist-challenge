@@ -58,8 +58,10 @@ export default {
         const errorResponseMessage = error.response.data
 
         ElMessage({
+          dangerouslyUseHTMLString: true,
           type: 'error',
-          message: `Houve um problema ao tentar excluir o usuário: [${errorResponseMessage}]`,
+          message: `Houve um problema ao tentar excluir o usuário:<br>[${errorResponseMessage}]`,
+          duration: 5000
         })
       }
     },
