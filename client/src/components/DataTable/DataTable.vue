@@ -15,6 +15,7 @@
     </header>
 
     <el-table
+      empty-text="Nenhum usuário encontrado"
       v-loading="loader"
       class="data-table-element"
       table-layout="auto"
@@ -179,12 +180,20 @@ export default {
           self.loader = false
         }, 1000)
       } catch (error: any) {
+        const message = this.createErrorMessage(error.response.data)
         ElMessage({
           type: 'error',
-          message: 'Houve um problema ao tentar carregar a lista de usuários',
+          message: message,
         })
         this.loader = false
       }
+    },
+    createErrorMessage(errorResponse: any) {
+      if (errorResponse.errorCode && errorResponse.errorCode === 'VALIDATION_ERROR') {
+        return 'O documento informado está incorreto. Tente preenchelo por completo.'
+      }
+
+      return 'Houve um problema ao tentar carregar a lista de usuários'
     },
     documentTypeFilter: (user: User) => {
       if (user.document.length > 11) {

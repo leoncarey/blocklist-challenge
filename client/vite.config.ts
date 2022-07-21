@@ -18,4 +18,8 @@ export default defineConfig({
     environment: 'happy-dom',
     watch: false,
   },
+  server: {
+    host: true,
+    port: 5173,
+  },
 })

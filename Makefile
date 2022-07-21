@@ -20,7 +20,7 @@ test-client:
 	docker cp blocklist-challenge-test-client$(ID):/app/coverage ./client
 
 
-run-client:
+run:
 	docker-compose build --pull
 	docker-compose up client
 
